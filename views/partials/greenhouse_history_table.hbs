@@ -1,0 +1,29 @@
+    <table class="table-striped table-responsive-sm m-1">
+        <caption>Greenhouse History</caption>
+        <thead>
+        <tr class="table-info">
+            <th scope="col">Temp</th>
+            <th scope="col">Hum</th>
+            <th scope="col">Pop_off</th>
+            <th scope="col">Fan_in</th>
+            <th scope="col">Fan_out</th>
+            <th scope="col">Veg_lamp_off</th>
+            <th scope="col">Flower_lamp_off</th>
+            <th scope="col">Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{# each history.data}}
+            <tr scope="row">
+                <th scope="col">{{this.temperature}}</th>
+                <th scope="col">{{this.humidity}}</th>
+                <th scope="col">{{this.pomp_off}}</th>
+                <th scope="col">{{this.fan_in}}</th>
+                <th scope="col">{{this.fan_out}}</th>
+                <th scope="col">{{this.veg_lamp_off}}</th>
+                <th scope="col">{{this.fruit_lamp_off}}</th>
+                <th scope="col">{{this.date}}</th>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>

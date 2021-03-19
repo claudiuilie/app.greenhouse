@@ -1,7 +1,8 @@
 const path = require('path');
-const auth = require('http-auth');
-const basicAuth = auth.basic({
+const httpAuth = require('http-auth');
+const authConnect = require("http-auth-connect");
+const basicAuth = httpAuth.basic({
     file: path.join(__dirname, '../users.htpasswd'),
 });
 
-module.exports = basicAuth;
+module.exports = authConnect(basicAuth);

@@ -1,0 +1,35 @@
+const env = process.env;
+
+const config = {
+    db: { /* don't expose password or any sensitive info, done only for demo */
+        host     : process.env.DB_HOST ,
+        user     : process.env.DB_USER,
+        password : process.env.DB_PASSWORD ,
+        database : process.env.DB_DATABASE
+    },
+    greenhouse: {
+        sensors: {
+            host: process.env.GREENHOUSE_HOST,
+            method: process.env.GREENHOUSE_METHOD
+        },
+        scheduler:{
+            host:process.env.APP_HOST,
+            path:process.env.GREENHOUSE_SCHEDULER,
+            port:process.env.APP_PORT,
+            headers: {
+                Authorization: process.env.GREEMHOUSE_AUTH
+            }
+        },
+        history: {
+            host:process.env.APP_HOST,
+            path:process.env.GREENHOUSE_HISTORY,
+            port:process.env.APP_PORT,
+            headers: {
+                Authorization: process.env.GREEMHOUSE_AUTH
+            }
+        }
+    },
+    listPerPage: env.LIST_PER_PAGE || 10,
+};
+
+module.exports = config;
