@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="card">
+        <div class="card-header p-1">
+            Server Logs
+        </div>
+        <div id="logsContainer" class="card-body overflow-auto p-1" style="height:300px;background-color: #818182;">
+            {{#each logs}}
+                <p  class="p-0 m-0 text-nowrap ">
+                    {{#ifEquals this.level 'info'}}<span class="badge bg-info">{{this.level}}</span>{{/ifEquals}}
+                    {{#ifEquals this.level 'error'}}<span class="badge bg-danger">{{this.level}}</span>{{/ifEquals}}
+                    {{#ifEquals this.level 'warn'}}<span class="badge bg-warning">{{this.level}}</span>{{/ifEquals}}
+                    {{#ifEquals this.level 'critical'}}<span class="badge bg-danger">{{this.level}}</span>{{/ifEquals}}
+                    <span class="badge bg-light text-dark">{{this.timestamp}}</span>
+                    <span class="badge bg-light text-dark">{{this.message}}</span>
+                    </p>
+            {{/each}}
+        </div>
+        <div class="card-footer text-muted p-1">
+            <input class="form-control-sm" type="text" id="searchLogsInput" onkeyup="searchLogs()" placeholder="search logs..">
+        </div>
+    </div>
+</div>

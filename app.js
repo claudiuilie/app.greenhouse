@@ -10,18 +10,26 @@ const indexRouter = require('./routes/main');
 const greenhouseSchedulerRouter = require('./routes/api/greenhouseSchedule');
 const greenhouseHistoryRouter = require('./routes/api/greenhouseHistory');
 const greenhouseRouter = require('./routes/api/greenhouse');
+const adminRouter = require('./routes/admin');
 const app = express();
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 
-app.engine('hbs', exphbs({
+const hbs = exphbs.create({
   defaultLayout: 'main',
-  extname: '.hbs'
-}));
+  extname: '.hbs',
+  // Specify helpers which are only registered on this instance.
+  helpers: {
+    ifEquals: function (arg1, arg2, options) {  return (arg1 === arg2) ? options.fn(this) : options.inverse(this); }
+  }
+});
+
+app.engine('hbs', hbs.engine);
 
 app.set('view engine', 'hbs');
-app.use(loggerService.logger);
+app.use(loggerService.consoleLogger);
+app.use(loggerService.fileLogger);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,6 +41,7 @@ app.use('/', indexRouter);
 app.use('/server/greenhouse-scheduler', greenhouseSchedulerRouter);
 app.use('/server/greenhouse-history', greenhouseHistoryRouter);
 app.use('/server/greenhouse', greenhouseRouter);
+app.use('/admin',adminRouter);
 // catch 404 and forward to error handler
 
 app.use(function(req, res, next) {
