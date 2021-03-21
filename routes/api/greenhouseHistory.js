@@ -7,7 +7,7 @@ router.get('/', async function(req, res, next) {
     try {
         res.json(await greenhouseHistory.getMultiple(req.query.page));
     } catch (err) {
-        console.error(`Error while getting programming languages `, err.message);
+        console.error(err.message);
         next(err);
     }
 });

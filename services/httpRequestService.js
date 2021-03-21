@@ -5,8 +5,6 @@ function httpRequest(options){
         http.request(options, (resp) => {
             let data = '';
 
-            console.log(resp.statusCode)
-
             // A chunk of data has been received.
             resp.on('data', (chunk) => {
                 data += chunk;
