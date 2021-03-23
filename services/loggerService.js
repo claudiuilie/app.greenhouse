@@ -1,5 +1,6 @@
 const winston = require('winston')
 const expressWinston = require('express-winston');
+const path = require('path');
 
 let consoleLogger = expressWinston.logger({
     transports: [
@@ -25,7 +26,7 @@ let fileLogger = expressWinston.logger({
                 winston.format.timestamp({format: 'YYYY-MM-DD HH:mm:ss'}),
                 winston.format.json()
             ),
-            filename: process.env.LOGS_FILE
+            filename: path.join(process.env.LOGS_FILE)
         })
     ],
     statusLevels: false, // default value
@@ -38,7 +39,7 @@ let fileLogger = expressWinston.logger({
 });
 
 function msgHandler(req, res) {
-// console.log(res)
+//todo add stack trace, like sql error
     return JSON.stringify({
         reqError: res.req.err,
         details: res.locals,

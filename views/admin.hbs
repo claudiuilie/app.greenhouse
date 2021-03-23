@@ -3,22 +3,27 @@
 </div>
 
 <script>
-    function searchLogs() {
-
-        let input, filter, ul, li, a, i, txtValue;
-        input = document.getElementById('searchLogsInput');
-        filter = input.value.toUpperCase();
+    function searchLogs(elem){
+        let filter, ul, li, a,b, i;
+        filter = elem.innerText.toUpperCase() || elem.value.toUpperCase();
         ul = document.getElementById("logsContainer");
         li = ul.getElementsByTagName('p');
 
         for (i = 0; i < li.length; i++) {
             a = li[i].getElementsByTagName("span")[0];
-            txtValue = a.textContent || a.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                li[i].style.display = "";
-            } else {
-                li[i].style.display = "none";
-            }
+            b = li[i].getElementsByTagName("span")[1];
+            filterElements(a,b,li[i],filter);
+        }
+    }
+
+    function filterElements(a,b,s,f){
+        let txtValueA,txtValueB;
+        txtValueA = a.textContent || a.innerText;
+        txtValueB = b.textContent || b.innerText;
+        if (txtValueA.toUpperCase().indexOf(f) > -1 || txtValueB.toUpperCase().indexOf(f) > -1) {
+            s.style.display = "";
+        } else {
+            s.style.display = "none";
         }
     }
 </script>
