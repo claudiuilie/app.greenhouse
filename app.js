@@ -1,10 +1,10 @@
 const express = require('express');
-const exphbs = require('express-handlebars');
-require('dotenv').config()
-const createError = require('http-errors');
 const path = require('path');
+const env = require('dotenv').config()
+const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const authService = require('./services/authService');
+const hbsHelper = require('./helpers/hbsHelper')
 const loggerService = require('./services/loggerService')
 const indexRouter = require('./routes/main');
 const greenhouseSchedulerRouter = require('./routes/api/greenhouseSchedule');
@@ -15,18 +15,7 @@ const app = express();
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
-
-const hbs = exphbs.create({
-  defaultLayout: 'main',
-  extname: '.hbs',
-  // Specify helpers which are only registered on this instance.
-  helpers: {
-    ifEquals: function (arg1, arg2, options) {  return (arg1 === arg2) ? options.fn(this) : options.inverse(this); }
-  }
-});
-
-app.engine('hbs', hbs.engine);
-
+app.engine('hbs', hbsHelper.engine);
 app.set('view engine', 'hbs');
 app.use(loggerService.consoleLogger);
 app.use(loggerService.fileLogger);
