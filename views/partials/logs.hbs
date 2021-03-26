@@ -1,25 +1,25 @@
 <div class="container">
-    <div class="card">
-        <div class="card-header p-1 text-center">
+    <div class="card shadow  mb-3 p-2 rounded">
+        <div class="card-header p-1 text-center bg-transparent">
            <button type="button" class="btn btn-sm float-right text-info" onclick="let x=document.getElementById('logsContainer');x.scrollTo(0,x.scrollHeight)">
                <i class="bi bi-arrow-down-circle"></i>
            </button>
             Server Logs
         </div>
-        <div id="logsContainer" class="card-body overflow-auto p-1" style="height:300px;background-color: #818182;">
+        <div id="logsContainer" class="card-body overflow-auto p-1 bg-green-faded" style="height:300px;background-color: #818182;">
             {{#each logs}}
                 <p  class="p-0 m-0 text-nowrap">
-                    {{#ifEquals this.level 'info'}}<span class="badge bg-info" onclick="searchLogs(this)">{{this.level}}</span>{{/ifEquals}}
-                    {{#ifEquals this.level 'error'}}<span class="badge bg-danger" onclick="searchLogs(this)">{{this.level}}</span>{{/ifEquals}}
-                    {{#ifEquals this.level 'warn'}}<span class="badge bg-warning" onclick="searchLogs(this)">{{this.level}}</span>{{/ifEquals}}
-                    {{#ifEquals this.level 'critical'}}<span class="badge bg-danger" onclick="searchLogs(this)">{{this.level}}</span>{{/ifEquals}}
-                    <span class="badge bg-light text-dark" onclick="searchLogs(this)">{{this.timestamp}}</span>
-                    <span class="badge bg-light text-dark">{{this.message}}</span>
+                    {{#ifEquals this.level 'info'}}<small class="badge bg-info" onclick="searchLogs(this)">{{this.level}}</small>{{/ifEquals}}
+                    {{#ifEquals this.level 'error'}}<small class="badge bg-danger" onclick="searchLogs(this)">{{this.level}}</small>{{/ifEquals}}
+                    {{#ifEquals this.level 'warn'}}<small class="badge bg-warning" onclick="searchLogs(this)">{{this.level}}</small>{{/ifEquals}}
+                    {{#ifEquals this.level 'critical'}}<small class="badge bg-danger" onclick="searchLogs(this)">{{this.level}}</small>{{/ifEquals}}
+                    <small class="badge bg-light text-dark" onclick="searchLogs(this)">{{this.timestamp}}</small>
+                    <small class="badge bg-light text-dark">{{this.message}}</small>
                     </p>
             {{/each}}
         </div>
-        <div class="card-footer text-muted p-1 text-center">
-            <div class="input-group input-group-sm mb-3">
+        <div class="card-footer text-muted p-2 text-center bg-transparent">
+            <div class="input-group input-group-sm">
                 <input type="text" class="form-control" id="searchLogsInput" onkeyup="searchLogs(this)" placeholder="search logs.."/>
             </div>
         </div>
