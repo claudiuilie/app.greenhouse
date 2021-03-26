@@ -21,3 +21,9 @@ function filterElements(a, b, s, f) {
         s.style.display = "none";
     }
 }
+
+function sendLogToModal(log) {
+    let modalContent = document.getElementById("logInfoModalContent");
+    let content = JSON.parse(log.innerText);
+    modalContent.innerText = JSON.stringify(content,null,2);
+}
