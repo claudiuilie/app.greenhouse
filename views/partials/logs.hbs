@@ -4,23 +4,43 @@
            <button type="button" class="btn btn-sm float-right text-info" onclick="let x=document.getElementById('logsContainer');x.scrollTo(0,x.scrollHeight)">
                <i class="bi bi-arrow-down-circle"></i>
            </button>
-            Server Logs
+            <h6>Server Logs</h6>
         </div>
         <div id="logsContainer" class="card-body overflow-auto p-1 bg-green-faded" style="height:300px;background-color: #818182;">
             {{#each logs}}
-                <p  class="p-0 m-0 text-nowrap">
-                    {{#ifEquals this.level 'info'}}<small class="badge bg-info" onclick="searchLogs(this)">{{this.level}}</small>{{/ifEquals}}
-                    {{#ifEquals this.level 'error'}}<small class="badge bg-danger" onclick="searchLogs(this)">{{this.level}}</small>{{/ifEquals}}
-                    {{#ifEquals this.level 'warn'}}<small class="badge bg-warning" onclick="searchLogs(this)">{{this.level}}</small>{{/ifEquals}}
-                    {{#ifEquals this.level 'critical'}}<small class="badge bg-danger" onclick="searchLogs(this)">{{this.level}}</small>{{/ifEquals}}
-                    <small class="badge bg-light text-dark" onclick="searchLogs(this)">{{this.timestamp}}</small>
-                    <small class="badge bg-light text-dark">{{this.message}}</small>
+                <p  class="p-0 m-0 text-nowrap border-bottom ">
+                    {{#ifEquals this.level 'info'}}<span class="badge bg-info btn" onclick="searchLogs(this)">{{this.level}}</span>{{/ifEquals}}
+                    {{#ifEquals this.level 'error'}}<span class="badge bg-danger btn" onclick="searchLogs(this)">{{this.level}}</span>{{/ifEquals}}
+                    {{#ifEquals this.level 'warn'}}<span class="badge bg-warning btn" onclick="searchLogs(this)">{{this.level}}</span>{{/ifEquals}}
+                    {{#ifEquals this.level 'critical'}}<span class="badge bg-danger btn" onclick="searchLogs(this)">{{this.level}}</span>{{/ifEquals}}
+                    <span class="badge bg-light text-dark btn" onclick="searchLogs(this)">{{this.timestamp}}</span>
+                    <span class="badge bg-light text-dark btn" data-toggle="modal" data-target="#logInfoModal" onclick="sendLogToModal(this)">{{this.message}}</span>
                     </p>
             {{/each}}
         </div>
         <div class="card-footer text-muted p-2 text-center bg-transparent">
             <div class="input-group input-group-sm">
                 <input type="text" class="form-control" id="searchLogsInput" onkeyup="searchLogs(this)" placeholder="search logs.."/>
+                <div class="input-group-append">
+                    <button class="input-group-text btn text-success" onclick="searchLogs(this)"><i class="bi bi-arrow-clockwise"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="logInfoModal" tabindex="-1" aria-labelledby="logInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title p-0" id="logInfoModalLabel">Log details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-danger">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" >
+                <pre id="logInfoModalContent"></pre>
             </div>
         </div>
     </div>
