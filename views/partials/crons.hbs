@@ -1,25 +1,25 @@
 <div class="container">
-    <div class="card ">
+    <div class="card shadow mb-3 rounded">
         <div class="card-header p-1 text-center">
             Jobs
         </div>
-        <div  class="card-body overflow-auto p-1 row" >
+        <div  class="card-body overflow-auto row " >
             {{#each jobs}}
-                <div class="col-sm-5 mb-1">
-                    <div class="card ">
-                        <div class="card-header p-1 text-capitalize text-center">
+                <div class="col-sm-5">
+                    <div class="card  bg-green-faded shadow p-3 mb-3  rounded">
+                        <div class="card-header p-1 text-capitalize text-center bg-transparent">
                             <span >{{@key}} </span>
                             <div class="spinner-grow {{#if this.running}}text-success{{else}}text-danger{{/if}} spinner-grow-sm" role="status"></div>
                         </div>
-                        <div class="card-body p-1">
+                        <div class="card-body pb-0">
                             {{#if this.lastExecution}}
                                 <div class="p-1">
                                     <i class="bi bi-calendar3"></i>
-                                     <span class="">Interval: [ {{this.cronTime.source}} ]</span>
+                                     <small class="">Interval: [ {{this.cronTime.source}} ]</small>
                                 </div>
                                 <div class="p-1">
                                     <i class="bi bi-clock-history"></i>
-                                    <span>Last run: {{#dateToString this.lastExecution}}{{/dateToString}}</span>
+                                    <small>Last run: {{#dateToString this.lastExecution}}{{/dateToString}}</small>
                                 </div>
                                 <div class="dropdown-divider"></div>
                             {{/if}}
