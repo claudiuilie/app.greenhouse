@@ -11,6 +11,7 @@ const greenhouseSchedulerRouter = require('./routes/api/greenhouseSchedule');
 const greenhouseHistoryRouter = require('./routes/api/greenhouseHistory');
 const greenhouseRouter = require('./routes/api/greenhouse');
 const adminRouter = require('./routes/admin');
+const cronManager = require('./cron/cronJobManager');
 const app = express();
 
 // view engine setup
@@ -32,6 +33,8 @@ app.use('/server/greenhouse-history', greenhouseHistoryRouter);
 app.use('/server/greenhouse', greenhouseRouter);
 app.use('/admin',adminRouter);
 // catch 404 and forward to error handler
+
+cronManager.createJobs();
 
 app.use(function(req, res, next) {
   next(createError(404));

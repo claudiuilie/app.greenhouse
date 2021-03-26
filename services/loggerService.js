@@ -35,15 +35,26 @@ let fileLogger = expressWinston.logger({
     msg:msgHandler, // optional: customize the default logging message. E.g. "{{res.statusCode}} {{req.method}} {{res.responseTime}}ms {{req.url}}"
     expressFormat: false, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
     colorize: false, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
-    ignoreRoute: function (req, res) { return false; } // optional: allows to skip some log messages based on request and/or response
+    ignoreRoute: routeHandler // optional: allows to skip some log messages based on request and/or response
 });
+
+
+function routeHandler(req) {
+    let p = req.path;
+    return (p.includes(".js") || p.includes(".css") || p.includes(".woff"));
+}
 
 function msgHandler(req, res) {
 //todo add stack trace, like sql error
+
     return JSON.stringify({
         reqError: res.req.err,
         details: res.locals,
-        reqBody: req.body,
+        reqBody:{
+            body:  req.body,
+            params: req.params,
+            query: req.query
+        },
         resBody: res.body,
         method: req.method,
         url: req.url,

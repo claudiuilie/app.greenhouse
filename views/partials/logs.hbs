@@ -1,12 +1,14 @@
 <div class="container">
     <div class="card">
-        <div class="card-header p-1">
+        <div class="card-header p-1 text-center">
+           <button type="button" class="btn btn-sm float-right text-info" onclick="let x=document.getElementById('logsContainer');x.scrollTo(0,x.scrollHeight)">
+               <i class="bi bi-arrow-down-circle"></i>
+           </button>
             Server Logs
         </div>
         <div id="logsContainer" class="card-body overflow-auto p-1" style="height:300px;background-color: #818182;">
-
             {{#each logs}}
-                <p  class="p-0 m-0 text-nowrap ">
+                <p  class="p-0 m-0 text-nowrap">
                     {{#ifEquals this.level 'info'}}<span class="badge bg-info" onclick="searchLogs(this)">{{this.level}}</span>{{/ifEquals}}
                     {{#ifEquals this.level 'error'}}<span class="badge bg-danger" onclick="searchLogs(this)">{{this.level}}</span>{{/ifEquals}}
                     {{#ifEquals this.level 'warn'}}<span class="badge bg-warning" onclick="searchLogs(this)">{{this.level}}</span>{{/ifEquals}}
@@ -16,8 +18,10 @@
                     </p>
             {{/each}}
         </div>
-        <div class="card-footer text-muted p-1">
-            <input class="form-control-sm" type="text" id="searchLogsInput" onkeyup="searchLogs(this)" placeholder="search logs..">
+        <div class="card-footer text-muted p-1 text-center">
+            <div class="input-group input-group-sm mb-3">
+                <input type="text" class="form-control" id="searchLogsInput" onkeyup="searchLogs(this)" placeholder="search logs.."/>
+            </div>
         </div>
     </div>
 </div>
