@@ -1,6 +1,7 @@
 function searchLogs(elem) {
-    let filter, ul, li, a, b, i;
+    let filter, ul, li, a, b, i,s;
     filter = elem.innerText.toUpperCase() || elem.value.toUpperCase();
+    s = document.getElementById("searchLogsInput");
     ul = document.getElementById("logsContainer");
     li = ul.getElementsByTagName('p');
 

@@ -6,7 +6,7 @@
            </button>
             <h6>Server Logs</h6>
         </div>
-        <div id="logsContainer" class="card-body overflow-auto p-1 bg-green-faded" style="height:300px;background-color: #818182;">
+        <div id="logsContainer" class="card-body overflow-auto p-1 bg-green-faded" style="height:500px;background-color: #818182;">
             {{#each logs}}
                 <p  class="p-0 m-0 text-nowrap border-bottom ">
                     {{#ifEquals this.level 'info'}}<span class="badge bg-info btn" onclick="searchLogs(this)">{{this.level}}</span>{{/ifEquals}}

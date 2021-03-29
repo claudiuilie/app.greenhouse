@@ -1,7 +1,22 @@
-<div class ="container mb-1 mt-1">
-    {{>crons}}
+<ul class="nav nav-tabs justify-content-center m-2 " id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="jobs-tab" data-toggle="tab" href="#jobs" role="tab" aria-controls="jobs" aria-selected="true">Jobs</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="logs-tab" data-toggle="tab" href="#logs" role="tab" aria-controls="logs" aria-selected="false">Logs</a>
+    </li>
+</ul>
+<div class="tab-content " id="myTabContent">
+
+    <div class="tab-pane fade show active mt-4" id="jobs" role="tabpanel" aria-labelledby="jobs-tab">
+            {{>crons}}
+    </div>
+    <div class="tab-pane fade mt-4" id="logs" role="tabpanel" aria-labelledby="logs-tab">
+            {{>logs}}
+    </div>
 </div>
-<div class ="container">
-    {{>logs}}
-</div>
+
+
+
+
 

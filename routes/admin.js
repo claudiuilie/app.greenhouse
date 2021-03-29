@@ -3,11 +3,17 @@ const router = express.Router();
 const fs = require('fs');
 const readline = require("readline");
 const path = require('path');
+const querystring = require('querystring');
 const cronJobManager = require('../cron/cronJobManager');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
     let l = [];
+    let message = {
+        type: req.query.type,
+        text: req.query.text
+    }
+
     readline.createInterface({
         input: fs.createReadStream(path.join(process.env.LOGS_FILE)),
         terminal: false
@@ -24,24 +30,34 @@ router.get('/', (req, res, next) => {
             res.render('admin',
                 {
                     logs: l,
-                    jobs: cronJobManager.getJobManager().jobs
+                    jobs: cronJobManager.getJobManager().jobs,
+                    info: message
                 })
         });
 
 });
 
-router.post('/cron/stop', (req, res, next) => {
-    console.log('stop')
-    res.redirect('/admin');
-});
-router.post('/cron/start', (req, res, next) => {
-    console.log("________________")
-    console.log(req.query)
-    console.log("________________")
-    console.log(req.params)
-    console.log("________________")
-    console.log(req.body)
-    res.redirect('/admin');
+router.post('/jobs', (req, res, next) => {
+
+    let query;
+    let jobName = req.body.jobName;
+    let jobState = parseInt(req.body.jobState);
+    let jobManager = cronJobManager.getJobManager();
+    if( jobState === 0){
+       jobManager.start(jobName);
+       query = querystring.stringify({
+            type: 'success',
+            text: `${jobName} started.`
+        });
+    }else{
+        jobManager.stop(jobName);
+        query = querystring.stringify({
+            type: 'success',
+            text: `${jobName} stopped.`
+        });
+    }
+
+    res.redirect('/admin?'+query);
 });
 
 module.exports = router;
