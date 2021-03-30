@@ -1,3 +1,4 @@
+
 function searchLogs(elem) {
     let filter, ul, li, a, b, i,s;
     filter = elem.innerText.toUpperCase() || elem.value.toUpperCase();
@@ -28,3 +29,4 @@ function sendLogToModal(log) {
     let content = JSON.parse(log.innerText);
     modalContent.innerText = JSON.stringify(content,null,2);
 }
+
