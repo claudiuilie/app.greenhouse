@@ -13,7 +13,7 @@
                 <div class="card-body p-0">
                     <h6 class="card-title pt-1 pl-2 mb-0">{{status.variables.temperature}}&#176;C</h6>
                     <small class="card-subtitle pl-1 text-muted"><i class="bi bi-thermometer-half"></i> Temperature</small>
-                    <div class="mt-3" style=" ">
+                    <div class="mt-3" style="height: 7em">
                         <canvas class="h-100" id="greenhouseTemperatureChart"></canvas>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                 <div class="card-body p-0">
                     <h6 class="card-title pt-1 pl-2 mb-0">{{status.variables.humidity}}<small>%</small></h6>
                     <small class="card-subtitle pl-1 text-muted"><i class="bi bi-droplet-half"></i> Humidity</small>
-                    <div class="mt-3" style=" ">
+                    <div class="mt-3" style="height: 7em">
                         <canvas class="h-100" id="greenhouseHumidityChart"></canvas>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                 <div class="card-body p-0">
                     <h6 class="card-title pt-1 pl-2 mb-0">{{status.variables.soil_moisture}}<small>%</small></h6>
                     <small class="card-subtitle pl-1 text-muted"><i class="bi bi-moisture"></i> Soil Moisture</small>
-                    <div class="mt-3" style=" ">
+                    <div class="mt-3" style="height: 7em">
                         <canvas class="h-100" id="greenhouseSoilMoistureChart"></canvas>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                     data: [{{tempHistory.data}}],
                     backgroundColor: [
                         'rgb(255,239,147)'],
-                    borderWidth: 0,
+                    borderWidth: 1,
                     pointRadius: 0
                 }]
             },
