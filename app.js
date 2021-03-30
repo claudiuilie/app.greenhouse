@@ -18,7 +18,7 @@ const app = express();
 // app.set('views', path.join(__dirname, 'views'));
 app.engine('hbs', hbsHelper.engine);
 app.set('view engine', 'hbs');
-app.use(loggerService.consoleLogger);
+// app.use(loggerService.consoleLogger);
 app.use(loggerService.fileLogger);
 
 app.use(express.json());
