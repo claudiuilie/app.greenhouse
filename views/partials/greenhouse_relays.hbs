@@ -1,0 +1,136 @@
+<div class="mt-3">
+    <h5>
+        <i class="fal fa-light-switch-on"></i></i> Relays
+        <small>
+            <i class="bi bi-chevron-down"></i>
+        </small>
+    </h5>
+</div>
+{{#if status.variables}}
+<div class="container">
+    <div class="row row-cols-2 p-1">
+        <div class="col p-1">
+            <div class="container card shadow mb-3rounded-lg">
+                <div class="row row-cols-2 ">
+                    <div class="col p-2 text-center">
+                        <span class="card-title" >Fan In</span>
+                    </div>
+                    <div class="col p-2 text-center mt-1">
+                        <i class="fal fa-fan {{#if status.variables.fan_in}}text-success{{else}}text-danger{{/if}}" style="font-size: 2rem"></i>
+                    </div>
+                </div>
+                <div class="row row-cols-1 p-2">
+                    <div class="col">
+                        <div class="custom-control custom-switch p-0">
+                            <input type="range" id="fan_in_control" value="{{status.variables.fan_in}}" class="form-range w-100 " min="0" max="255" step="5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col p-1">
+            <div class="container card shadow mb-3rounded-lg">
+                <div class="row row-cols-2 ">
+                    <div class="col p-2 text-center">
+                        <span class="card-title" >Fan Out</span>
+                    </div>
+                    <div class="col p-2 text-center mt-1">
+                        <i class="fal fa-fan {{#if status.variables.fan_out}}text-success{{else}}text-danger{{/if}}" style="font-size: 2rem"></i>
+                    </div>
+                </div>
+                <div class="row row-cols-1 p-2">
+                    <div class="col">
+                        <div class="custom-control custom-switch p-0">
+                            <input type="range" id="fan_out_control" value="{{status.variables.fan_out}}" class="form-range w-100 " min="0" max="255" step="5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col p-1">
+            <div class="container card shadow mb-3rounded-lg">
+                <div class="row row-cols-2 ">
+                    <div class="col p-2 text-center">
+                        <span class="card-title mb-0 " >Veg Lights</span>
+                    </div>
+                    <div class="col p-2 text-center mt-1">
+                        <i class="fal fa-lightbulb {{#if status.variables.veg_lamp_off}}text-danger{{else}}text-success{{/if}}" style="font-size: 2rem"></i>
+                    </div>
+                </div>
+                <div class="row row-cols-1 p-2">
+                    <div class="col">
+                        <div class="custom-control custom-switch text-center">
+                            <form method="POST" action="#">
+                                <input type="checkbox"
+                                       onchange="this.closest('form').submit()"
+                                       class="custom-control-input" id="id_veg_lights"
+                                    {{#unless status.variables.veg_lamp_off}} checked {{/unless}}/>
+                                <label class="custom-control-label" for="id_veg_lights"></label>
+                                <input type="hidden" name="name" value="veg_lights" />
+                                <input type="hidden" name="status" value="{{#if status.variables.veg_lamp_off}}0{{else}}1{{/if}}" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col p-1">
+            <div class="container card shadow mb-3rounded-lg">
+                <div class="row row-cols-2 ">
+                    <div class="col p-2 text-center">
+                        <span class="card-title mb-0 " >Fruit Lights</span>
+                    </div>
+                    <div class="col p-2 text-center mt-1">
+                        <i class="fal fa-lightbulb {{#if status.variables.fruit_lamp_off}}text-danger{{else}}text-success{{/if}}" style="font-size: 2rem"></i>
+                    </div>
+                </div>
+                <div class="row row-cols-1 p-2">
+                    <div class="col">
+                        <div class="custom-control custom-switch text-center">
+                            <form method="POST" action="#">
+                                <input type="checkbox"
+                                       onchange="this.closest('form').submit()"
+                                       class="custom-control-input" id="id_flower_lights"
+                                    {{#unless status.variables.fruit_lamp_off}} checked {{/unless}}/>
+                                <label class="custom-control-label" for="id_flower_lights"></label>
+                                <input type="hidden" name="name" value="flower_lights" />
+                                <input type="hidden" name="status" value="{{#if status.variables.fruit_lamp_off}}0{{else}}1{{/if}}" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col p-1">
+            <div class="container card shadow mb-3rounded-lg">
+                <div class="row row-cols-2 ">
+                    <div class="col p-2 text-center">
+                        <span class="card-title mb-0 " >Pomp</span>
+                    </div>
+                    <div class="col p-2 text-center mt-1">
+                        <i class="fal fa-faucet-drip {{#if status.variables.pomp_off}}text-danger{{else}}text-success{{/if}}" style="font-size: 2rem"></i>
+                    </div>
+                </div>
+                <div class="row row-cols-1 p-2">
+                    <div class="col">
+                        <div class="custom-control custom-switch text-center">
+                            <form method="POST" action="#">
+                                <input type="checkbox"
+                                       onchange="this.closest('form').submit()"
+                                       class="custom-control-input" id="id_pomp"
+                                    {{#unless status.variables.pomp_off}} checked {{/unless}}/>
+                                <label class="custom-control-label" for="id_pomp"></label>
+                                <input type="hidden" name="name" value="pomp" />
+                                <input type="hidden" name="status" value="{{#if status.variables.pomp_off}}1{{else}}0{{/if}}" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{{/if}}

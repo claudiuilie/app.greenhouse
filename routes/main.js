@@ -23,7 +23,7 @@ router.get('/',  async (req, res, next) => {
   }
 
   await http(options.scheduler)
-      .then((data)=>{greenhouseScheduler = data})
+      .then((data)=>{greenhouseScheduler = data.data})
       .catch((err)=>{next(err)});
 
   await http(options.history)
