@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const http = require("../services/httpRequestService");
-const options = require('../config/config').greenhouse;
+const greenhouseHistoryDb = require('../services/database/greenhouseHistory');
+const greenhouseScheduleDb = require('../services/database/greenhouseSchedule');
+const options = require('../config/config');
 
 /* GET home page. */
 router.get('/',  async (req, res, next) => {
@@ -22,26 +24,40 @@ router.get('/',  async (req, res, next) => {
     labels: []
   }
 
-  await http(options.scheduler)
-      .then((data)=>{greenhouseScheduler = data.data})
-      .catch((err)=>{next(err)});
-
-  await http(options.history)
-      .then((data)=>{greenhouseHistory = data.data})
+  await http(options.greenhouse.sensors)
+      .then((data)=>{
+        res.body = data;
+        greenhouseStatus = data;
+      })
       .catch((err)=>{next(err)})
 
-  await http(options.sensors)
-      .then((data)=>{greenhouseStatus = data})
-      .catch((err)=>{next(err); req.err = err})
+  try {
+    let data = await greenhouseHistoryDb.getMultiple(10)
+    res.body = data;
+    greenhouseHistory = data.data;
+  } catch (err) {
+    next(err);
+  }
 
-  for(let k = greenhouseHistory.length -1 ; k >= 0 ; k--){
-    if(greenhouseHistory[k].temperature != null){
-      greenhouseTempHistory.data.push(greenhouseHistory[k].temperature);
-      greenhouseTempHistory.labels.push(1);
-      greenhouseHumHistory.data.push(greenhouseHistory[k].humidity);
-      greenhouseHumHistory.labels.push(1);
-      greenhouseSoilHistory.data.push(greenhouseHistory[k].soil_moisture);
-      greenhouseSoilHistory.labels.push(1);
+  try {
+    let data = await greenhouseScheduleDb.getMultiple()
+    res.body = data;
+    console.log(data)
+    greenhouseScheduler = data.data;
+  } catch (err) {
+    next(err);
+  }
+
+  if(greenhouseHistory != null){
+    for(let k = greenhouseHistory.length -1 ; k >= 0 ; k--){
+      if(greenhouseHistory[k].temperature != null){
+        greenhouseTempHistory.data.push(greenhouseHistory[k].temperature);
+        greenhouseTempHistory.labels.push(1);
+        greenhouseHumHistory.data.push(greenhouseHistory[k].humidity);
+        greenhouseHumHistory.labels.push(1);
+        greenhouseSoilHistory.data.push(greenhouseHistory[k].soil_moisture);
+        greenhouseSoilHistory.labels.push(1);
+      }
     }
   }
 
