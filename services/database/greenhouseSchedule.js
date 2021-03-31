@@ -2,21 +2,26 @@ const db = require('./mysqlService');
 const helper = require('../../helpers/dbHelper');
 const config = require('../../config/config');
 
-async function getMultiple(page = 1){
-    const offset = helper.getOffset(page, config.listPerPage);
-    const rows = await db.query(
-        `SELECT * from greenhouse_schedule LIMIT ?,?`,
-        [offset, config.listPerPage]
-    );
-    const data = helper.emptyOrRows(rows);
-    const meta = {page};
+function getMultiple(page = 1){
+    return new Promise(async (resolve,reject)=>{
+        try{
+            const offset = helper.getOffset(page, config.listPerPage);
+            const rows = await db.query(
+                `SELECT * from greenhouse_schedule LIMIT ?,?`,
+                [offset, config.listPerPage]
+            );
+            const data = helper.emptyOrRows(rows);
+            const meta = {page};
 
-    return {
-        data,
-        meta
-    }
+            resolve({
+                data,
+                meta
+            });
+        }catch(err){
+            reject(err)
+        }
+    });
 }
-
 
 module.exports = {
     getMultiple

@@ -9,6 +9,7 @@
     </div>
     <div class="container">
         <div class="row row-cols-3 p-1 ">
+<!--            temperature-->
             <div class="col p-1">
                 <div class="card shadow mb-3 rounded-lg">
                     <div class="card-body p-0">
@@ -20,22 +21,24 @@
                     </div>
                 </div>
             </div>
+<!--            humidity-->
             <div class="col p-1">
                 <div class="card shadow mb-3 rounded-lg">
                     <div class="card-body p-0">
                         <h6 class="card-title pt-1 pl-2 mb-0">{{status.variables.humidity}}<small>%</small></h6>
-                        <small class="card-subtitle pl-1 text-muted"><i class="far fa-dewpoint"></i> Humidity</small>
+                        <small class="card-subtitle pl-1 text-muted"><i class="fal fa-tint"></i> Humidity</small>
                         <div class="mt-3" style="height: 6rem">
                             <canvas class="h-100" id="greenhouseHumidityChart"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
+<!--            soil moisture-->
             <div class="col p-1">
                 <div class="card shadow mb-3 rounded-lg">
                     <div class="card-body p-0">
                         <h6 class="card-title pt-1 pl-2 mb-0">{{status.variables.soil_moisture}}<small>%</small></h6>
-                        <small class="card-subtitle pl-1 text-muted"><i class="bi bi-moisture"></i> Soil Moisture</small>
+                        <small class="card-subtitle pl-1 text-muted"><i class="far fa-dewpoint"></i> Soil Moisture</small>
                         <div class="mt-3" style="height: 6rem">
                             <canvas class="h-100" id="greenhouseSoilMoistureChart"></canvas>
                         </div>

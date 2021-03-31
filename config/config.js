@@ -11,22 +11,6 @@ const config = {
         sensors: {
             host: process.env.GREENHOUSE_HOST,
             method: process.env.GREENHOUSE_METHOD
-        },
-        scheduler:{
-            host:process.env.APP_HOST,
-            path:process.env.GREENHOUSE_SCHEDULER,
-            port:process.env.APP_PORT,
-            headers: {
-                Authorization: process.env.GREEMHOUSE_AUTH
-            }
-        },
-        history: {
-            host:process.env.APP_HOST,
-            path:process.env.GREENHOUSE_HISTORY,
-            port:process.env.APP_PORT,
-            headers: {
-                Authorization: process.env.GREEMHOUSE_AUTH
-            }
         }
     },
     listPerPage: env.LIST_PER_PAGE || 10,

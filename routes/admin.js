@@ -9,10 +9,7 @@ const cronJobManager = require('../cron/cronJobManager');
 /* GET home page. */
 router.get('/', (req, res, next) => {
     let l = [];
-    let message = {
-        type: req.query.type,
-        text: req.query.text
-    }
+    let message = {type: req.query.type,text: req.query.text}
 
     readline.createInterface({
         input: fs.createReadStream(path.join(process.env.LOGS_FILE)),

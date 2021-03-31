@@ -6,10 +6,7 @@ const cookieParser = require('cookie-parser');
 const authService = require('./services/authService');
 const hbsHelper = require('./helpers/hbsHelper')
 const loggerService = require('./services/loggerService')
-const indexRouter = require('./routes/main');
-const greenhouseSchedulerRouter = require('./routes/api/greenhouseSchedule');
-const greenhouseHistoryRouter = require('./routes/api/greenhouseHistory');
-const greenhouseRouter = require('./routes/api/greenhouse');
+const indexRouter = require('./routes/greenhouse');
 const adminRouter = require('./routes/admin');
 const cronManager = require('./cron/cronJobManager');
 const app = express();
@@ -28,9 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(authService);
 
 app.use('/', indexRouter);
-app.use('/server/greenhouse-scheduler', greenhouseSchedulerRouter);
-app.use('/server/greenhouse-history', greenhouseHistoryRouter);
-app.use('/server/greenhouse', greenhouseRouter);
 app.use('/admin',adminRouter);
 // catch 404 and forward to error handler
 
