@@ -4,6 +4,7 @@ const http = require("../services/httpRequestService");
 const greenhouseHistoryDb = require('../services/database/greenhouseHistory');
 const greenhouseScheduleDb = require('../services/database/greenhouseSchedule');
 const options = require('../config/config');
+const querystring = require('querystring');
 
 /* GET home page. */
 router.get('/',  async (req, res, next) => {
@@ -63,4 +64,24 @@ router.get('/',  async (req, res, next) => {
 
 });
 
+router.post('/lights', async(req,res,next)=>{
+    let query;
+    let lightName = req.body.name;
+    let lightStatus = parseInt(req.body.status);
+
+    await http({
+        hostname: process.env.GREENHOUSE_HOST,
+        method: "GET",
+        path: `/digital/${lightName === 'vegPhase' ? 5 : 6 }/${lightStatus}`
+        })
+        .then((data)=>{
+                res.body = data;
+                query = querystring.stringify({
+                    type: 'success',
+                    text: `${lightName === 'vegPhase' ? 'Veg Light' : 'Fruit Light' } started.`
+                });
+            res.redirect('/?'+query);
+            })
+        .catch((err)=>{next(err)});
+});
 module.exports = router;

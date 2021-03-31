@@ -11,7 +11,13 @@ const config = {
         sensors: {
             host: process.env.GREENHOUSE_HOST,
             method: process.env.GREENHOUSE_METHOD
+        },
+        vegLight: {
+            hostname: process.env.GREENHOUSE_HOST,
+            method: "GET",
+            path:  "/vegPhase"
         }
+
     },
     listPerPage: env.LIST_PER_PAGE || 10,
 };

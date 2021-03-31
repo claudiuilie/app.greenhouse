@@ -1,9 +1,6 @@
 <div class="mt-3">
     <h5>
-        <i class="fal fa-light-switch-on"></i></i> Relays
-        <small>
-            <i class="bi bi-chevron-down"></i>
-        </small>
+        <i class="fal fa-light-switch-on"></i> Relays
     </h5>
 </div>
 {{#if status.variables}}
@@ -62,13 +59,13 @@
                 <div class="row row-cols-1 p-2">
                     <div class="col">
                         <div class="custom-control custom-switch text-center">
-                            <form method="POST" action="#">
+                            <form method="POST" action="/lights">
                                 <input type="checkbox"
                                        onchange="this.closest('form').submit()"
                                        class="custom-control-input" id="id_veg_lights"
                                     {{#unless status.variables.veg_lamp_off}} checked {{/unless}}/>
                                 <label class="custom-control-label" for="id_veg_lights"></label>
-                                <input type="hidden" name="name" value="veg_lights" />
+                                <input type="hidden" name="name" value="vegPhase" />
                                 <input type="hidden" name="status" value="{{#if status.variables.veg_lamp_off}}0{{else}}1{{/if}}" />
                             </form>
                         </div>
@@ -80,7 +77,7 @@
             <div class="container card shadow mb-3rounded-lg">
                 <div class="row row-cols-2 ">
                     <div class="col p-2 text-center">
-                        <span class="card-title mb-0 " >Fruit Lights</span>
+                        <span class="card-title mb-0 " >Flower Lights</span>
                     </div>
                     <div class="col p-2 text-center mt-1">
                         <i class="fal fa-lightbulb {{#if status.variables.fruit_lamp_off}}text-danger{{else}}text-success{{/if}}" style="font-size: 2rem"></i>
@@ -89,13 +86,13 @@
                 <div class="row row-cols-1 p-2">
                     <div class="col">
                         <div class="custom-control custom-switch text-center">
-                            <form method="POST" action="#">
+                            <form method="POST" action="/lights">
                                 <input type="checkbox"
                                        onchange="this.closest('form').submit()"
                                        class="custom-control-input" id="id_flower_lights"
                                     {{#unless status.variables.fruit_lamp_off}} checked {{/unless}}/>
                                 <label class="custom-control-label" for="id_flower_lights"></label>
-                                <input type="hidden" name="name" value="flower_lights" />
+                                <input type="hidden" name="name" value="fruitPhase" />
                                 <input type="hidden" name="status" value="{{#if status.variables.fruit_lamp_off}}0{{else}}1{{/if}}" />
                             </form>
                         </div>
