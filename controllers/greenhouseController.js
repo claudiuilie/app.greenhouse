@@ -72,6 +72,20 @@ async function setPomp(status,runSeconds,sleepSeconds) {
     return success;
 }
 
+async function pomp(start) {
+
+    await http(`http://${options.host}/digital/3/p=${start ? 0 : 1}`)
+        .then((data) => {
+            if (typeof data.return_value !== "undefined")
+                success = data.return_value === 1;
+        })
+        .catch((err) => {
+            console.log(err);
+            success = false
+        })
+    return success;
+}
+
 async function sleep() {
 
     await http(`http://${options.host}${options.sleepEndpoint}?p=1`)
@@ -106,5 +120,6 @@ module.exports = {
     setVegLamp,
     setPomp,
     sleep,
+    pomp,
     getStats
 }

@@ -40,8 +40,8 @@ router.get('/', async (req, res, next) => {
     req.session.alert = {};
 });
 
-router.post('/lights', async (req, res, next) => {
-    let query;
+router.post('/lights', async (req, res) => {
+
     let lightName = req.body.name;
     let lightStatus = parseInt(req.body.status);
 
@@ -64,6 +64,59 @@ router.post('/lights', async (req, res, next) => {
             req.session.alert = {
                 type: 'danger',
                 text: `Invalid light name ${lightName}`
+            }
+    }
+
+    res.redirect('/');
+});
+
+router.post('/fan', async (req, res) => {
+
+    let fanName = req.body.name;
+    let fanStatus = parseInt(req.body.status);
+    console.log(fanName)
+    switch (fanName) {
+        case "fanIn" :
+            await greenhouseController.setFanIn(fanStatus ? 102 : 0);
+            req.session.alert = {
+                type: 'info',
+                text: `Fan in ${fanStatus ? 'started' : 'stopped'}.`
+            }
+            break;
+        case "fanOut" :
+            await greenhouseController.setFanOut(fanStatus ? 102 : 0);
+            req.session.alert = {
+                type: 'info',
+                text: `Fan out ${fanStatus ? 'started' : 'stopped'}.`
+            }
+            break;
+        default:
+            req.session.alert = {
+                type: 'danger',
+                text: `Invalid fan name ${fanName}`
+            }
+    }
+
+    res.redirect('/');
+});
+
+router.post('/pomp', async (req, res) => {
+
+    let pompName = req.body.name;
+    let pompStatus = parseInt(req.body.status);
+
+    switch (pompName) {
+        case "pomp" :
+            await greenhouseController.pomp(pompStatus);
+            req.session.alert = {
+                type: 'info',
+                text: `Pomp ${pompStatus ? 'started' : 'stopped'}.`
+            }
+            break;
+        default:
+            req.session.alert = {
+                type: 'danger',
+                text: `Invalid pomp name ${pompName}`
             }
     }
 

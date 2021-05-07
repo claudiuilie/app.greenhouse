@@ -7,6 +7,9 @@ const hbs = expressHbs.create({
         ifEquals: function (arg1, arg2, options) {
             return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
             },
+        ifGreater: function (arg1, arg2, options) {
+            return (arg1 > arg2) ? options.fn(this) : options.inverse(this);
+        },
         dateToString: function(dateString){
 
             if(typeof dateString !== 'undefined') {
@@ -23,6 +26,9 @@ const hbs = expressHbs.create({
                 return null;
             }
 
+        },
+        percent: function(actual, max) {
+            return (parseInt(actual / max * 100));
         }
     }
 });

@@ -17,9 +17,24 @@
                     </div>
                 </div>
                 <div class="row row-cols-1 p-2">
+                    <div class="col mb-2">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: {{#percent status.fan_in 255}}{{/percent}}%" aria-valuenow="{{status.fan_in}}" aria-valuemin="0" aria-valuemax="255">
+                                {{#percent status.fan_in 255}}{{/percent}}%
+                            </div>
+                        </div>
+                    </div>
                     <div class="col">
-                        <div class="custom-control custom-switch p-0">
-                            <input type="range" id="fan_in_control" value="{{status.fan_in}}" class="form-range w-100 " min="0" max="255" step="5">
+                        <div class="custom-control custom-switch text-center">
+                            <form method="POST" action="/fan">
+                                <input type="checkbox"
+                                       onchange="this.closest('form').submit()"
+                                       class="custom-control-input" id="id_fan_in"
+                                    {{#ifGreater status.fan_in 0}} checked {{/ifGreater}}/>
+                                <label class="custom-control-label" for="id_fan_in"></label>
+                                <input type="hidden" name="name" value="fanIn" />
+                                <input type="hidden" name="status" value="{{#ifGreater status.fan_in 0}}0{{else}}1{{/ifGreater}}" />
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -36,10 +51,25 @@
                         <i class="fal fa-fan {{#if status.fan_out}}text-success{{else}}text-danger{{/if}}" style="font-size: 2rem"></i>
                     </div>
                 </div>
-                <div class="row row-cols-1 p-2">
+                <div class="row row-cols-1 p-2 ">
+                    <div class="col mb-2">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: {{#percent status.fan_out 255}}{{/percent}}%" aria-valuenow="{{status.fan_out}}" aria-valuemin="0" aria-valuemax="255">
+                                {{#percent status.fan_out 255}}{{/percent}}%
+                            </div>
+                        </div>
+                    </div>
                     <div class="col">
-                        <div class="custom-control custom-switch p-0">
-                            <input type="range" id="fan_out_control" value="{{status.fan_out}}" class="form-range w-100 " min="0" max="255" step="5">
+                        <div class="custom-control custom-switch text-center">
+                            <form method="POST" action="/fan">
+                                <input type="checkbox"
+                                       onchange="this.closest('form').submit()"
+                                       class="custom-control-input" id="id_fan_out"
+                                    {{#ifGreater status.fan_out 0}} checked {{/ifGreater}}/>
+                                <label class="custom-control-label" for="id_fan_out"></label>
+                                <input type="hidden" name="name" value="fanOut" />
+                                <input type="hidden" name="status" value="{{#ifGreater status.fan_out 0}}0{{else}}1{{/ifGreater}}" />
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -113,7 +143,7 @@
                 <div class="row row-cols-1 p-2">
                     <div class="col">
                         <div class="custom-control custom-switch text-center">
-                            <form method="POST" action="#">
+                            <form method="POST" action="/pomp">
                                 <input type="checkbox"
                                        onchange="this.closest('form').submit()"
                                        class="custom-control-input" id="id_pomp"
