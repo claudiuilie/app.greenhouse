@@ -34,6 +34,7 @@ router.get('/', async (req, res, next) => {
         tempHistory: greenhouseTempHistory,
         humHistory: greenhouseHumHistory,
         soilHistory: greenhouseSoilHistory,
+        home: true,
         info: req.session.alert
     });
 
@@ -74,7 +75,6 @@ router.post('/fan', async (req, res) => {
 
     let fanName = req.body.name;
     let fanStatus = parseInt(req.body.status);
-    console.log(fanName)
     switch (fanName) {
         case "fanIn" :
             await greenhouseController.setFanIn(fanStatus ? 102 : 0);

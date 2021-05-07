@@ -74,7 +74,7 @@ async function setPomp(status,runSeconds,sleepSeconds) {
 
 async function pomp(start) {
 
-    await http(`http://${options.host}/digital/3/p=${start ? 0 : 1}`)
+    await http(`http://${options.host}/digital/3/${start ? 0 : 1}`)
         .then((data) => {
             if (typeof data.return_value !== "undefined")
                 success = data.return_value === 1;

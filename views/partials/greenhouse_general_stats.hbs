@@ -1,7 +1,7 @@
 {{#if status}}
-    <div class="mt-3">
+    <div class="mt-3 text-info">
         <h5>
-            <i class="fal fa-analytics"></i> General Stats
+            <i class="fad fa-analytics"></i> General Stats
         </h5>
     </div>
     <div class="container">
@@ -10,8 +10,8 @@
             <div class="col p-1">
                 <div class="card shadow mb-3 rounded-lg">
                     <div class="card-body p-0">
-                        <h6 class="card-title pt-1 pl-2 mb-0">{{status.temperature}}&#176;C</h6>
-                        <small class="card-subtitle pl-1 text-muted"><i class="far fa-thermometer-quarter"></i> Temperature</small>
+                        <small class="card-subtitle pl-1 text-warning"><i class="far fa-thermometer-quarter"></i> Temperature</small>
+                        <h6 class="card-title pt-1 pl-2 mb-0 text-muted">{{status.temperature}}&#176;C</h6>
                         <div class="mt-3" style="height: 6rem">
                             <canvas class="h-100" id="greenhouseTemperatureChart"></canvas>
                         </div>
@@ -22,8 +22,8 @@
             <div class="col p-1">
                 <div class="card shadow mb-3 rounded-lg">
                     <div class="card-body p-0">
-                        <h6 class="card-title pt-1 pl-2 mb-0">{{status.humidity}}<small>%</small></h6>
-                        <small class="card-subtitle pl-1 text-muted"><i class="fal fa-tint"></i> Humidity</small>
+                        <small class="card-subtitle pl-1 text-info"><i class="fad fa-tint"></i> Humidity</small>
+                        <h6 class="card-title pt-1 pl-2 mb-0 text-muted">{{status.humidity}}<small>%</small></h6>
                         <div class="mt-3" style="height: 6rem">
                             <canvas class="h-100" id="greenhouseHumidityChart"></canvas>
                         </div>
@@ -34,8 +34,8 @@
             <div class="col p-1">
                 <div class="card shadow mb-3 rounded-lg">
                     <div class="card-body p-0">
-                        <h6 class="card-title pt-1 pl-2 mb-0">{{status.soil_moisture}}<small>%</small></h6>
-                        <small class="card-subtitle pl-1 text-muted"><i class="far fa-dewpoint"></i> Soil Moisture</small>
+                        <small class="card-subtitle pl-1" style="color: saddlebrown"><i class="fad fa-humidity"></i> Soil Moisture</small>
+                        <h6 class="card-title pt-1 pl-2 mb-0 text-muted">{{status.soil_moisture}}<small>%</small></h6>
                         <div class="mt-3" style="height: 6rem">
                             <canvas class="h-100" id="greenhouseSoilMoistureChart"></canvas>
                         </div>

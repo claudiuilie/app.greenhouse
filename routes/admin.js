@@ -27,6 +27,7 @@ router.get('/', (req, res, next) => {
                 {
                     logs: l,
                     jobs: cronJobManager.getJobManager().jobs,
+                    admin: true,
                     info: req.session.alert
                 });
             req.session.alert = {};

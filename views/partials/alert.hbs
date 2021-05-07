@@ -1,31 +1,37 @@
 {{#if info.text}}
-    <div class="container mt-2">
-    <div class="row">
-        <div class="col-md-12 col-xl-12 ">
-            <div class="alert alert-{{info.type}} alert-dismissible fade show" role="alert">
-                <div class="row justify-content-center pb-2">
-                    {{#ifEquals info.type 'warning'}}
-                        <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
-                    {{/ifEquals}}
-                    {{#ifEquals info.type 'success'}}
-                        <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
-                    {{/ifEquals}}
-                    {{#ifEquals info.type 'danger'}}
-                        <i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
-                    {{/ifEquals}}
-                    {{#ifEquals info.type 'info'}}
-                        <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
-                    {{/ifEquals}}
-                </div>
-                <div class="container text-center">
-                    {{info.text}}
-                </div>
+    <div class="container mt-2" id="alertContainer">
+        <div class="row">
+            <div class="col-md-12 col-xl-12 ">
+                <div class="alert alert-{{info.type}} alert-dismissible fade show" role="alert">
+                    <div class="row justify-content-center pb-2">
+                        {{#ifEquals info.type 'warning'}}
+                            <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>
+                        {{/ifEquals}}
+                        {{#ifEquals info.type 'success'}}
+                            <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+                        {{/ifEquals}}
+                        {{#ifEquals info.type 'danger'}}
+                            <i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+                        {{/ifEquals}}
+                        {{#ifEquals info.type 'info'}}
+                            <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+                        {{/ifEquals}}
+                    </div>
+                    <div class="container text-center">
+                        {{info.text}}
+                    </div>
 
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-    </div>
+    <script>
+        $("#alertContainer").fadeTo(2000, 500).slideUp(500, function() {
+            $("#alertContainer").slideUp(500);
+        });
+    </script>
 {{/if}}
+
