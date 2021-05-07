@@ -77,7 +77,7 @@ async function monitorJob() {
         let tempInRange = isInRange(greenHouseStats.temperature, schedule.min_temp, schedule.max_temp);
         let humInRange = isInRange(greenHouseStats.humidity, schedule.min_humidity, schedule.max_humidity);
         //todo hum control
-
+        //todo soil moisture control
         await tempControl(tempInRange, schedule, greenHouseStats)
         await lightsControl(schedule);
 
@@ -117,7 +117,7 @@ async function tempControl(inRange, schedule, greenHouseStats) {
         await greenhouseController.setFanOut(fanSettings.max);
     } else {
         await greenhouseController.setFanIn(fanSettings.min);
-        await greenhouseController.setFanOut(fanSettings.min + 1);
+        await greenhouseController.setFanOut(fanSettings.min + 1); //todo change arduino logic to permin 0 value
     }
 }
 
