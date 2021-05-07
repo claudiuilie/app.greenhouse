@@ -1,21 +1,32 @@
 const db = require('./mysqlService');
 const helper = require('../../helpers/dbHelper');
-const config = require('../../config/config');
 
-function getMultiple(page = 1){
+function getMultiple(){
     return new Promise(async (resolve,reject)=>{
         try{
-            const offset = helper.getOffset(page, config.listPerPage);
             const rows = await db.query(
-                `SELECT * from greenhouse_monitor LIMIT ?,?`,
-                [offset, config.listPerPage]
+                `SELECT * from history order by modified desc LIMIT 24 `
             );
             const data = helper.emptyOrRows(rows);
-            const meta = {page};
+            resolve(data);
+        }catch(err){
+            reject(err)
+        }
+    });
+}
+
+function insertHistory(insertObject){
+    return new Promise(async (resolve,reject)=>{
+        const query = `INSERT into history (temperature,humidity,soil_moisture,fan_in,fan_out,pomp_off,veg_lamp_off,fruit_lamp_off) VALUES(?,?,?,?,?,?,?,?)`;
+        try{
+            const rows = await db.query(
+                query,
+                Object.values(insertObject)
+            );
+            const data = helper.emptyOrRows(rows);
 
             resolve({
-                data,
-                meta
+                data
             });
         }catch(err){
             reject(err)
@@ -23,7 +34,7 @@ function getMultiple(page = 1){
     });
 }
 
-
 module.exports = {
-    getMultiple
+    getMultiple,
+    insertHistory
 }

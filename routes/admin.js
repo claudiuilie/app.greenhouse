@@ -8,9 +8,8 @@ const cronJobManager = require('../cron/cronJobManager');
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-    let l = [];
-    let message = {type: req.query.type,text: req.query.text}
 
+    let l = [];
     readline.createInterface({
         input: fs.createReadStream(path.join(process.env.LOGS_FILE)),
         terminal: false
@@ -28,33 +27,33 @@ router.get('/', (req, res, next) => {
                 {
                     logs: l,
                     jobs: cronJobManager.getJobManager().jobs,
-                    info: message
-                })
+                    info: req.session.alert
+                });
+            req.session.alert = {};
         });
 
 });
 
 router.post('/jobs', (req, res, next) => {
 
-    let query;
     let jobName = req.body.jobName;
     let jobState = parseInt(req.body.jobState);
     let jobManager = cronJobManager.getJobManager();
-    if( jobState === 0){
-       jobManager.start(jobName);
-       query = querystring.stringify({
-            type: 'success',
+    if (jobState === 0) {
+        jobManager.start(jobName);
+        req.session.alert = {
+            type: 'info',
             text: `${jobName} started.`
-        });
-    }else{
+        };
+    } else {
         jobManager.stop(jobName);
-        query = querystring.stringify({
-            type: 'success',
+        req.session.alert = {
+            type: 'info',
             text: `${jobName} stopped.`
-        });
+        };
     }
 
-    res.redirect('/admin?'+query);
+    res.redirect('/admin');
 });
 
 module.exports = router;

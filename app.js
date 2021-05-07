@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const env = require('dotenv').config()
+const session = require('express-session');
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const authService = require('./services/authService');
@@ -15,6 +16,11 @@ const app = express();
 // app.set('views', path.join(__dirname, 'views'));
 app.engine('hbs', hbsHelper.engine);
 app.set('view engine', 'hbs');
+app.use(session({
+  resave: false,
+  secret: "secret",
+  saveUninitialized: false
+}));
 // app.use(loggerService.consoleLogger);
 app.use(loggerService.fileLogger);
 

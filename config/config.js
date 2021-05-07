@@ -8,16 +8,13 @@ const config = {
         database : process.env.DB_DATABASE
     },
     greenhouse: {
-        sensors: {
-            host: process.env.GREENHOUSE_HOST,
-            method: process.env.GREENHOUSE_METHOD
-        },
-        vegLight: {
-            hostname: process.env.GREENHOUSE_HOST,
-            method: "GET",
-            path:  "/vegPhase"
-        }
-
+        host: process.env.GREENHOUSE_HOST,
+        vegLightEndpoint: process.env.GREENHOUSE_VEG_LAMP_ENDPOINT,
+        fruitLightEndpoint:  process.env.GREENHOUSE_FRUIT_LAMP_ENDPOINT,
+        fanInEndpoint: process.env.GREENHOUSE_FAN_IN_ENDPOINT,
+        fanOutEndpoint: process.env.GREENHOUSE_FAN_OUT_ENDPOINT,
+        pompEndpoint: process.env.GREENHOUSE_POMP_ENDPOINT,
+        sleepEndpoint: process.env.GREENHOUSE_SLEEP_ENDPOINT
     },
     listPerPage: env.LIST_PER_PAGE || 10,
 };

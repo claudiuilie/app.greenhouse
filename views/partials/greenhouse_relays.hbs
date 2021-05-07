@@ -3,8 +3,8 @@
         <i class="fal fa-light-switch-on"></i> Relays
     </h5>
 </div>
-{{#if status.variables}}
-<div class="container">
+{{#if status}}
+<div class="container ">
     <div class="row row-cols-2 p-1">
         <div class="col p-1">
             <div class="container card shadow mb-3rounded-lg">
@@ -13,13 +13,13 @@
                         <span class="card-title" >Fan In</span>
                     </div>
                     <div class="col p-2 text-center mt-1">
-                        <i class="fal fa-fan {{#if status.variables.fan_in}}text-success{{else}}text-danger{{/if}}" style="font-size: 2rem"></i>
+                        <i class="fal fa-fan {{#if status.fan_in}}text-success{{else}}text-danger{{/if}}" style="font-size: 2rem"></i>
                     </div>
                 </div>
                 <div class="row row-cols-1 p-2">
                     <div class="col">
                         <div class="custom-control custom-switch p-0">
-                            <input type="range" id="fan_in_control" value="{{status.variables.fan_in}}" class="form-range w-100 " min="0" max="255" step="5">
+                            <input type="range" id="fan_in_control" value="{{status.fan_in}}" class="form-range w-100 " min="0" max="255" step="5">
                         </div>
                     </div>
                 </div>
@@ -33,13 +33,13 @@
                         <span class="card-title" >Fan Out</span>
                     </div>
                     <div class="col p-2 text-center mt-1">
-                        <i class="fal fa-fan {{#if status.variables.fan_out}}text-success{{else}}text-danger{{/if}}" style="font-size: 2rem"></i>
+                        <i class="fal fa-fan {{#if status.fan_out}}text-success{{else}}text-danger{{/if}}" style="font-size: 2rem"></i>
                     </div>
                 </div>
                 <div class="row row-cols-1 p-2">
                     <div class="col">
                         <div class="custom-control custom-switch p-0">
-                            <input type="range" id="fan_out_control" value="{{status.variables.fan_out}}" class="form-range w-100 " min="0" max="255" step="5">
+                            <input type="range" id="fan_out_control" value="{{status.fan_out}}" class="form-range w-100 " min="0" max="255" step="5">
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                         <span class="card-title mb-0 " >Veg Lights</span>
                     </div>
                     <div class="col p-2 text-center mt-1">
-                        <i class="fal fa-lightbulb {{#if status.variables.veg_lamp_off}}text-danger{{else}}text-success{{/if}}" style="font-size: 2rem"></i>
+                        <i class="fal fa-lightbulb {{#if status.veg_lamp_off}}text-danger{{else}}text-success{{/if}}" style="font-size: 2rem"></i>
                     </div>
                 </div>
                 <div class="row row-cols-1 p-2">
@@ -63,10 +63,10 @@
                                 <input type="checkbox"
                                        onchange="this.closest('form').submit()"
                                        class="custom-control-input" id="id_veg_lights"
-                                    {{#unless status.variables.veg_lamp_off}} checked {{/unless}}/>
+                                    {{#unless status.veg_lamp_off}} checked {{/unless}}/>
                                 <label class="custom-control-label" for="id_veg_lights"></label>
                                 <input type="hidden" name="name" value="vegPhase" />
-                                <input type="hidden" name="status" value="{{#if status.variables.veg_lamp_off}}0{{else}}1{{/if}}" />
+                                <input type="hidden" name="status" value="{{#if status.veg_lamp_off}}0{{else}}1{{/if}}" />
                             </form>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
                         <span class="card-title mb-0 " >Flower Lights</span>
                     </div>
                     <div class="col p-2 text-center mt-1">
-                        <i class="fal fa-lightbulb {{#if status.variables.fruit_lamp_off}}text-danger{{else}}text-success{{/if}}" style="font-size: 2rem"></i>
+                        <i class="fal fa-lightbulb {{#if status.fruit_lamp_off}}text-danger{{else}}text-success{{/if}}" style="font-size: 2rem"></i>
                     </div>
                 </div>
                 <div class="row row-cols-1 p-2">
@@ -90,10 +90,10 @@
                                 <input type="checkbox"
                                        onchange="this.closest('form').submit()"
                                        class="custom-control-input" id="id_flower_lights"
-                                    {{#unless status.variables.fruit_lamp_off}} checked {{/unless}}/>
+                                    {{#unless status.fruit_lamp_off}} checked {{/unless}}/>
                                 <label class="custom-control-label" for="id_flower_lights"></label>
                                 <input type="hidden" name="name" value="fruitPhase" />
-                                <input type="hidden" name="status" value="{{#if status.variables.fruit_lamp_off}}0{{else}}1{{/if}}" />
+                                <input type="hidden" name="status" value="{{#if status.fruit_lamp_off}}0{{else}}1{{/if}}" />
                             </form>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                         <span class="card-title mb-0 " >Pomp</span>
                     </div>
                     <div class="col p-2 text-center mt-1">
-                        <i class="fal fa-faucet-drip {{#if status.variables.pomp_off}}text-danger{{else}}text-success{{/if}}" style="font-size: 2rem"></i>
+                        <i class="fal fa-faucet-drip {{#if status.pomp_off}}text-danger{{else}}text-success{{/if}}" style="font-size: 2rem"></i>
                     </div>
                 </div>
                 <div class="row row-cols-1 p-2">
@@ -117,10 +117,10 @@
                                 <input type="checkbox"
                                        onchange="this.closest('form').submit()"
                                        class="custom-control-input" id="id_pomp"
-                                    {{#unless status.variables.pomp_off}} checked {{/unless}}/>
+                                    {{#unless status.pomp_off}} checked {{/unless}}/>
                                 <label class="custom-control-label" for="id_pomp"></label>
                                 <input type="hidden" name="name" value="pomp" />
-                                <input type="hidden" name="status" value="{{#if status.variables.pomp_off}}1{{else}}0{{/if}}" />
+                                <input type="hidden" name="status" value="{{#if status.pomp_off}}1{{else}}0{{/if}}" />
                             </form>
                         </div>
                     </div>
