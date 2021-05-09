@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const scheduleController = require('../controllers/scheduleController');
 const greenhouseController = require('../controllers/greenhouseController');
 const historyController = require('../controllers/historyController');
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
 
-    let greenhouseScheduler = await scheduleController.getAllSchedules();
     let greenhouseHistory = await historyController.getLastDayHistory();
     let greenhouseStatus = await greenhouseController.getStats();
     let greenhouseTempHistory = {data: [], labels: []};
@@ -28,7 +26,6 @@ router.get('/', async (req, res, next) => {
     }
 
     res.render('home', {
-        scheduler: greenhouseScheduler,
         history: greenhouseHistory,
         status: greenhouseStatus,
         tempHistory: greenhouseTempHistory,

@@ -1,25 +1,11 @@
-const greenhouseScheduleDb = require('../services/database/greenhouseSchedule');
+const greenhouseScheduleDb = require('../services/database/greenhouseGrowth');
 
-async function getActiveSchedule() {
+async function getAllActiveGrowth() {
     let r = null;
-    await greenhouseScheduleDb.getActive()
+    await greenhouseScheduleDb.getActiveGrowth()
         .then(async (data)=>{
             if(data.length > 0){
-                r = data[0]
-            }
-        })
-        .catch((err)=>{
-             console.log(err);
-        });
-    return r;
-}
-
-async function getAllSchedules() {
-    let r = null;
-    await greenhouseScheduleDb.getMultiple()
-        .then(async (data)=>{
-            if(data.length > 0){
-                r = data
+                r = data[0];
             }
         })
         .catch((err)=>{
@@ -29,6 +15,5 @@ async function getAllSchedules() {
 }
 
 module.exports = {
-    getActiveSchedule,
-    getAllSchedules
+    getAllActiveGrowth
 }

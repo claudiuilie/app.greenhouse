@@ -7,8 +7,9 @@ const cookieParser = require('cookie-parser');
 const authService = require('./services/authService');
 const hbsHelper = require('./helpers/hbsHelper')
 const loggerService = require('./services/loggerService')
-const indexRouter = require('./routes/greenhouse');
+const indexRouter = require('./routes/home');
 const adminRouter = require('./routes/admin');
+const growthRouter = require('./routes/growth')
 const cronManager = require('./cron/cronJobManager');
 const app = express();
 
@@ -32,6 +33,7 @@ app.use(authService);
 
 app.use('/', indexRouter);
 app.use('/admin',adminRouter);
+app.use('/growth', growthRouter);
 // catch 404 and forward to error handler
 
 cronManager.createJobs();

@@ -1,47 +1,52 @@
-{{#each scheduler}}
-    {{#if this.active}}
-<div class="mt-3 text-info">
-    <h5>
-        <i class="fad fa-watch"></i> Schedule
-    </h5>
-</div>
-<div class="container">
-    <div class="row row-cols-1 justify-content-center ">
-        <div class="col card shadow mb-3 rounded-lg">
-            {{#ifEquals this.stage_id 1}}
-                <span class="m-0 text-center"><i class="fad fa-seedling text-success fa-lg mt-2"></i> </span>
-            {{/ifEquals}}
-            {{#ifEquals this.stage_id 2}}
-                <span class="m-0 text-center"><i class="fad fa-cannabis text-success fa-lg mt-2"></i> </span>
-            {{/ifEquals}}
-            {{#ifEquals this.stage_id 3}}
-                <span class="m-0 text-center"><i class="fad fa-flower text-danger fa-lg mt-2"></i> </span>
-            {{/ifEquals}}
-            <div class="row row-cols-3 p-1 justify-content-center">
-                <div class="col p-1">
-                    <div class="card shadow rounded-lg p-1">
-                        <div class="card-body p-0 text-center text-warning">
-                            <small class="font-weight-bold"><i class="fad fa-thermometer-full"></i> {{this.min_temp}}&#176;C - {{this.max_temp}}&#176;C</small>
+{{#if greenhouseGrowth.active_schedule}}
+    <div class="mt-3 text-info">
+        <h5>
+            <i class="fad fa-watch"></i> Schedule
+        </h5>
+    </div>
+    <div class="container">
+        <div class="row row-cols-1 justify-content-center ">
+            <div class="col card shadow mb-3 rounded-lg">
+                {{#ifEquals greenhouseGrowth.stage_id 1}}
+                    <span class="m-0 text-center"><i class="fad fa-seedling text-success fa-lg mt-2"></i> </span>
+                {{/ifEquals}}
+                {{#ifEquals greenhouseGrowth.stage_id 2}}
+                    <span class="m-0 text-center"><i class="fad fa-cannabis text-success fa-lg mt-2"></i> </span>
+                {{/ifEquals}}
+                {{#ifEquals greenhouseGrowth.stage_id 3}}
+                    <span class="m-0 text-center"><i class="fad fa-flower text-danger fa-lg mt-2"></i> </span>
+                {{/ifEquals}}
+                <div class="row row-cols-3 p-1 justify-content-center">
+                    <div class="col p-1">
+                        <div class="card shadow rounded-lg p-1">
+                            <div class="card-body p-0 text-center text-warning">
+                                <small class="font-weight-bold"><i
+                                        class="fad fa-thermometer-full"></i> {{greenhouseGrowth.min_temp}}&#176;C
+                                    - {{greenhouseGrowth.max_temp}}&#176;C</small>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col p-1">
-                    <div class="card shadow rounded-lg p-1">
-                        <div class="card-body p-0 text-center text-info">
-                            <small class="font-weight-bold"><i class="fad fa-tint"></i> {{this.min_humidity}}<i class="fad fa-percentage"></i> - {{this.max_humidity}}<i class="fad fa-percentage"></i></small>
+                    <div class="col p-1">
+                        <div class="card shadow rounded-lg p-1">
+                            <div class="card-body p-0 text-center text-info">
+                                <small class="font-weight-bold"><i
+                                        class="fad fa-tint"></i> {{greenhouseGrowth.min_humidity}}<i
+                                        class="fad fa-percentage"></i> - {{greenhouseGrowth.max_humidity}}<i
+                                        class="fad fa-percentage"></i></small>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col p-1">
-                    <div class="card shadow rounded-lg p-1">
-                        <div class="card-body p-0 text-center text-success">
-                            <small class="font-weight-bold"><i class="fad fa-lightbulb-on"></i> {{this.lamp_start}}:00 - {{this.lamp_stop}}:00</small>
+                    <div class="col p-1">
+                        <div class="card shadow rounded-lg p-1">
+                            <div class="card-body p-0 text-center text-success">
+                                <small class="font-weight-bold"><i
+                                        class="fad fa-lightbulb-on"></i> {{greenhouseGrowth.lamp_start}}:00
+                                    - {{greenhouseGrowth.lamp_stop}}:00</small>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-    {{/if}}
-{{/each}}
+{{/if}}
