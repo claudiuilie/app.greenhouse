@@ -17,7 +17,7 @@ function getMultiple(){
 
 function insertHistory(insertObject){
     return new Promise(async (resolve,reject)=>{
-        const query = `INSERT into history (temperature,humidity,soil_moisture,fan_in,fan_out,pomp_off,veg_lamp_off,fruit_lamp_off) VALUES(?,?,?,?,?,?,?,?)`;
+        const query = `INSERT into history (temperature,humidity,soil_moisture_1,soil_moisture_2,fan_in,fan_out,pomp_off,veg_lamp_off,fruit_lamp_off) VALUES(?,?,?,?,?,?,?,?,?)`;
         try{
             const rows = await db.query(
                 query,
