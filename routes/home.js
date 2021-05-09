@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 const greenhouseController = require('../controllers/greenhouseController');
 const historyController = require('../controllers/historyController');
+const scheduleController = require('../controllers/scheduleController');
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
 
     let greenhouseHistory = await historyController.getLastDayHistory();
     let greenhouseStatus = await greenhouseController.getStats();
+    let waterTankSettings = await scheduleController.getTankSettings();
     let greenhouseTempHistory = {data: [], labels: []};
     let greenhouseHumHistory = {data: [], labels: []};
     let greenhouseSoilHistory = {data: [], labels: []};
@@ -28,6 +30,7 @@ router.get('/', async (req, res, next) => {
     res.render('home', {
         history: greenhouseHistory,
         status: greenhouseStatus,
+        tank: waterTankSettings,
         tempHistory: greenhouseTempHistory,
         humHistory: greenhouseHumHistory,
         soilHistory: greenhouseSoilHistory,

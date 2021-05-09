@@ -13,7 +13,7 @@ function createJobs() {
             });
         },
         {
-            start: false,
+            start: true,
             onComplete: () => {
                 console.log("GREENHOUSE_HISTORY_JOB stopped")
             }
@@ -25,7 +25,7 @@ function createJobs() {
         });
 
     }, {
-        start: false,
+        start: true,
         onComplete: () => {
             console.log("GREENHOUSE_MONITOR_JOB stopped")
         }
@@ -38,11 +38,12 @@ function getJobManager() {
 }
 
 async function historyJob() {
-
     const insertValues = {
         temperature: null,
         humidity: null,
-        soil_moisture: null,
+        soil_moisture_1: null,
+        soil_moisture_2: null,
+        water_level: null,
         fan_in: null,
         fan_out: null,
         pomp_off: null,
@@ -55,7 +56,9 @@ async function historyJob() {
     if (gStats) {
         insertValues.temperature = gStats.temperature;
         insertValues.humidity = gStats.humidity;
-        insertValues.soil_moisture = gStats.soil_moisture;
+        insertValues.soil_moisture_1 = gStats.soil_moisture_1;
+        insertValues.soil_moisture_2 = gStats.soil_moisture_2;
+        insertValues.water_level = gStats.water_level;
         insertValues.fan_in = gStats.fan_in;
         insertValues.fan_out = gStats.fan_out;
         insertValues.pomp_off = gStats.pomp_off;
@@ -67,7 +70,6 @@ async function historyJob() {
 }
 
 async function monitorJob() {
-
     let schedule = await scheduleController.getActiveSchedule();
     let greenHouseStats = await greenhouseController.getStats();
 

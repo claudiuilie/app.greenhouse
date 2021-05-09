@@ -2,6 +2,37 @@ const db = require('./mysqlService');
 const helper = require('../../helpers/dbHelper');
 const config = require('../../config/config');
 
+function getActiveSchedule(){
+    return new Promise(async (resolve,reject)=>{
+        const query = `SELECT s.*,ss.name FROM schedule s 
+                            LEFT JOIN stage ss on s.stage_id = ss.id 
+                        WHERE s.active = 1;`
+        try{
+            const rows = await db.query(query);
+            const data = helper.emptyOrRows(rows);
+
+            resolve(data);
+        }catch(err){
+            reject(err)
+        }
+    });
+}
+
+function getTankSettings(){
+    return new Promise(async (resolve,reject)=>{
+        const query = `SELECT * from water_tank;`
+        try{
+            const rows = await db.query(query);
+            const data = helper.emptyOrRows(rows);
+
+            resolve(data);
+        }catch(err){
+            reject(err)
+        }
+    });
+}
+
+
 function getActiveGrowth() {
     return new Promise(async (resolve, reject) => {
         try {
@@ -37,5 +68,7 @@ function getActiveGrowth() {
 
 module.exports = {
 
-    getActiveGrowth
+    getActiveGrowth,
+    getActiveSchedule,
+    getTankSettings
 }

@@ -110,7 +110,7 @@
                         <span class="card-title mb-0 " >Flower Lights</span>
                     </div>
                     <div class="col p-2 text-center mt-1">
-                        <i class="fad fa-lightbulb {{#if status.fruit_lamp_off}}text-danger{{else}}text-warning{{/if}}" style="font-size: 2rem"></i>
+                        <i class="fad fa-lightbulb {{#if status.fruit_lamp_off}}text-danger{{else}}fa-lightbulb-on text-warning{{/if}}" style="font-size: 2rem"></i>
                     </div>
                 </div>
                 <div class="row row-cols-1 p-2">
@@ -139,6 +139,7 @@
                     <div class="col p-2 text-center mt-1">
                         <i class="fad fa-faucet-drip {{#if status.pomp_off}}text-danger{{else}}text-info{{/if}}" style="font-size: 2rem"></i>
                     </div>
+                    {{tank}}
                 </div>
                 <div class="row row-cols-1 p-2">
                     <div class="col">
