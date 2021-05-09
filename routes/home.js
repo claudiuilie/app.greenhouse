@@ -14,6 +14,12 @@ router.get('/', async (req, res, next) => {
     let greenhouseHumHistory = {data: [], labels: []};
     let greenhouseSoilHistory = {data: [], labels: []};
 
+    if(waterTankSettings != null){
+        let c = waterTankSettings.height - greenhouseStatus.water_level;
+        waterTankSettings["current_capacity"] = (waterTankSettings.length * waterTankSettings.width * c / 1000000).toFixed(2);
+        waterTankSettings["max_capacity"] = (waterTankSettings.length * waterTankSettings.width * waterTankSettings.height / 1000000).toFixed(2);
+    }
+
     if (greenhouseHistory != null) {
         for (let k = greenhouseHistory.length - 1; k >= 0; k--) {
             if (greenhouseHistory[k].temperature != null) {

@@ -139,7 +139,16 @@
                     <div class="col p-2 text-center mt-1">
                         <i class="fad fa-faucet-drip {{#if status.pomp_off}}text-danger{{else}}text-info{{/if}}" style="font-size: 2rem"></i>
                     </div>
-                    {{tank}}
+                </div>
+                <div class="row row-cols-1 ">
+                    <div class="col  text-center mt-1">
+                        <i class="fad fa-water text-info"></i>{{tank.current_capacity}}L
+                        <div class="progress w-100">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: {{#percent tank.current_capacity tank.max_capacity}}{{/percent}}%" aria-valuenow="{{status.current_capacity}}" aria-valuemin="0" aria-valuemax="{{tank.max_capacity}}">
+                                {{#percent tank.current_capacity tank.max_capacity}}{{/percent}}%
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row row-cols-1 p-2">
                     <div class="col">
@@ -158,7 +167,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 {{/if}}
