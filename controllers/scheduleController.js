@@ -42,8 +42,23 @@ async function getTankSettings() {
     return r;
 }
 
+async function getSoilSettings() {
+    let r = null;
+    await greenhouseScheduleDb.getSoilSettings()
+        .then(async (data)=>{
+            if(data.length > 0){
+                r = data[0]
+            }
+        })
+        .catch((err)=>{
+            console.log(err);
+        });
+    return r;
+}
+
 module.exports = {
     getAllActiveGrowth,
     getActiveSchedule,
-    getTankSettings
+    getTankSettings,
+    getSoilSettings
 }

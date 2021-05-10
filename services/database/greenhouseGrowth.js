@@ -32,6 +32,21 @@ function getTankSettings(){
     });
 }
 
+function getSoilSettings(){
+    return new Promise(async (resolve,reject)=>{
+        const query = `SELECT * from soil_moisture;`
+        try{
+            const rows = await db.query(query);
+            const data = helper.emptyOrRows(rows);
+
+            resolve(data);
+        }catch(err){
+            reject(err)
+        }
+    });
+}
+
+
 
 function getActiveGrowth() {
     return new Promise(async (resolve, reject) => {
@@ -70,5 +85,6 @@ module.exports = {
 
     getActiveGrowth,
     getActiveSchedule,
-    getTankSettings
+    getTankSettings,
+    getSoilSettings
 }

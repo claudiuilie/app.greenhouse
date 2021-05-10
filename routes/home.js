@@ -10,9 +10,11 @@ router.get('/', async (req, res, next) => {
     let greenhouseHistory = await historyController.getLastDayHistory();
     let greenhouseStatus = await greenhouseController.getStats();
     let waterTankSettings = await scheduleController.getTankSettings();
+    let soilMoistureSettings = await scheduleController.getSoilSettings();
     let greenhouseTempHistory = {data: [], labels: []};
     let greenhouseHumHistory = {data: [], labels: []};
-    let greenhouseSoilHistory = {data: [], labels: []};
+    let greenhouseSoilHistory1 = {data: [], labels: []};
+    let greenhouseSoilHistory2 = {data: [], labels: []};
 
     if(waterTankSettings != null){
         let c = waterTankSettings.height - greenhouseStatus.water_level;
@@ -20,6 +22,15 @@ router.get('/', async (req, res, next) => {
         waterTankSettings["max_capacity"] = (waterTankSettings.length * waterTankSettings.width * waterTankSettings.height / 1000000).toFixed(2);
     }
 
+    if(soilMoistureSettings != null){
+        const x = greenhouseStatus.soil_moisture_1;
+        const y = greenhouseStatus.soil_moisture_2;
+        const dry = soilMoistureSettings.dry;
+        const wet = soilMoistureSettings.wet;
+        greenhouseStatus["percentage_moisture_1"] = ((x - dry) * 100 / (wet - dry)).toFixed(2);
+        greenhouseStatus["percentage_moisture_2"] = ((y - dry) * 100 / (wet - dry)).toFixed(2);
+    }
+    
     if (greenhouseHistory != null) {
         for (let k = greenhouseHistory.length - 1; k >= 0; k--) {
             if (greenhouseHistory[k].temperature != null) {
@@ -27,8 +38,10 @@ router.get('/', async (req, res, next) => {
                 greenhouseTempHistory.labels.push(1);
                 greenhouseHumHistory.data.push(greenhouseHistory[k].humidity);
                 greenhouseHumHistory.labels.push(1);
-                greenhouseSoilHistory.data.push(greenhouseHistory[k].soil_moisture);
-                greenhouseSoilHistory.labels.push(1);
+                greenhouseSoilHistory1.data.push(greenhouseHistory[k].soil_moisture_1);
+                greenhouseSoilHistory1.labels.push(1);
+                greenhouseSoilHistory2.data.push(greenhouseHistory[k].soil_moisture_2);
+                greenhouseSoilHistory2.labels.push(1);
             }
         }
     }
@@ -39,7 +52,8 @@ router.get('/', async (req, res, next) => {
         tank: waterTankSettings,
         tempHistory: greenhouseTempHistory,
         humHistory: greenhouseHumHistory,
-        soilHistory: greenhouseSoilHistory,
+        soilHistory_1: greenhouseSoilHistory1,
+        soilHistory_2: greenhouseSoilHistory2,
         home: true,
         info: req.session.alert
     });
