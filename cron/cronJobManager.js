@@ -13,7 +13,7 @@ function createJobs() {
             });
         },
         {
-            start: false,
+            start: !!parseInt(process.env.GREENHOUSE_HISTORY_JOB_AUTOSTART),
             onComplete: () => {
                 console.log("GREENHOUSE_HISTORY_JOB stopped")
             }
@@ -25,7 +25,7 @@ function createJobs() {
         });
 
     }, {
-        start: false,
+        start: !!parseInt(process.env.GREENHOUSE_MONITOR_JOB_AUTOSTART),
         onComplete: () => {
             console.log("GREENHOUSE_MONITOR_JOB stopped")
         }

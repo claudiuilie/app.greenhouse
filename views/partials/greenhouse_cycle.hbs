@@ -22,33 +22,38 @@
                     </h6>
                 </div>
                 <div class="dropdown-divider"></div>
-                <div class="container ">
-                    <div class="row row-cols-3 p-0 justify-content-center  rounded card-body">
-                        <div class="col">
+                <div class="container p-0">
+                    <div class="row row-cols-3 p-0 justify-content-center rounded m-0">
+                        <div class="col p-0">
                             <div>
-                                <div class="card-body p-0 text-center text-warning">
-                                    <small class="font-weight-bold"><i
-                                            class="fad fa-thermometer-full"></i> {{this.min_temp}}&#176;C
-                                        - {{this.max_temp}}&#176;C</small>
+                                <div class="card-body p-0 text-center text-muted">
+                                    <small class="font-weight-bold">
+                                        <i class="fad fa-thermometer-full text-warning fa-lg"></i>
+                                        <span class="text-muted">{{this.min_temp}}&#176;C - {{this.max_temp}}&#176;C</span>
+                                    </small>
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        <div class="col p-0">
                             <div>
-                                <div class="card-body p-0 text-center text-info">
-                                    <small class="font-weight-bold"><i
-                                            class="fad fa-tint"></i> {{this.min_humidity}}<i
-                                            class="fad fa-percentage"></i> - {{this.max_humidity}}<i
-                                            class="fad fa-percentage"></i></small>
+                                <div class="card-body p-0 text-center ">
+                                    <small class="font-weight-bold">
+                                        <i class="fad fa-tint text-info fa-lg"></i>
+                                        <span class="text-muted"> {{this.min_humidity}}</span>
+                                        <i class="fad fa-percentage text-muted"></i>
+                                        <span class="text-muted"> - {{this.max_humidity}}</span>
+                                        <i class="fad fa-percentage text-muted"></i>
+                                    </small>
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col p-0">
                             <div>
-                                <div class="card-body p-0 text-center text-success">
-                                    <small class="font-weight-bold"><i
-                                            class="fad fa-lightbulb-on"></i> {{this.lamp_start}}:00
-                                        - {{this.lamp_stop}}:00</small>
+                                <div class="card-body p-0 text-center text-muted">
+                                    <small class="font-weight-bold">
+                                        <i class="fad fa-lightbulb-on text-warning"></i>
+                                        <span class="text-muted">{{this.lamp_start}}:00 - {{this.lamp_stop}}:00</span>
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -58,14 +63,14 @@
                 <div class="container">
                     <div class="row row-cols-1 p-1 justify-content-center   rounded card-body">
                         <div class="col p-1">
-                            <small class="text-success font-weight-bold"><i class="fad fa-calendar-day"></i> Start date: {{this.start_date}}</small>
+                            <small class="text-muted font-weight-bold"><i class="fad fa-calendar-day"></i> Start date: {{this.start_date}}</small>
                         </div>
                         {{#if this.end_date }}
                             <div class="col p-1">
-                                <small class="text-danger font-weight-bold"><i class="fad fa-calendar-day"></i> End date: {{this.end_date}}</small>
+                                <small class="text-muted font-weight-bold"><i class="fad fa-calendar-day"></i> End date: {{this.end_date}}</small>
                             </div>
                         {{/if}}
-                        {{#if this.active}}
+                        {{#if this.active_cycle}}
                             <div class="col p-1">
                                 <small class="text-muted font-weight-bold">Progress: {{#daysToToday this.start_date_format}}{{/daysToToday}} days</small>
                             </div>
@@ -80,7 +85,7 @@
                     <div class="dropdown-divider"></div>
                     <div class="row row-cols-1 p-1 justify-content-center">
                         <div class="col p-1 text-center">
-                            <button type="button" class="btn btn-warning text-white font-weight-bold">End Cycle</button>
+                            <button type="button" class="btn btn-outline-warning  font-weight-bold">End Cycle</button>
                         </div>
                     </div>
                 {{/unless}}

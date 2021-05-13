@@ -46,12 +46,12 @@ function getSoilSettings(){
     });
 }
 
-
 function getActiveGrowth() {
     return new Promise(async (resolve, reject) => {
         try {
             const rows = await db.query(
-                `select c.growth_id,
+                `select c.id "cycle_id",
+                        c.growth_id,
                         c.schedule_id,
                         c.active_cycle,
                         c.start_date "start_date_format",
@@ -61,8 +61,7 @@ function getActiveGrowth() {
                      from growth g 
                         join cycle c on c.growth_id = g.id
                         join schedule s on c.schedule_id = s.id
-                     where g.active = 1
-                     order by c.id desc;`
+                     where g.active = 1;`
             );
             const data = helper.emptyOrRows(rows);
             resolve(data);
