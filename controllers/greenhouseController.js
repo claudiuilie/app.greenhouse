@@ -1,5 +1,6 @@
 const http = require("../services/httpRequestService");
 const options = require('../config/config').greenhouse;
+const scheduleController = require('../controllers/scheduleController');
 let success;
 
 async function setFanIn(value) {
@@ -58,17 +59,27 @@ async function setFruitLamp(value) {
     return success;
 }
 
-async function setPomp(status,runSeconds,sleepSeconds) {
+async function setPomp(ml) {
 
-    await http(`http://${options.host}${options.pompEndpoint}?p=${status}&${runSeconds}:${sleepSeconds}`)
-        .then((data) => {
-            if (typeof data.return_value !== "undefined")
-                success = data.return_value === 1;
-        })
-        .catch((err) => {
-            console.log(err);
-            success = false
-        })
+    const tank = await scheduleController.getTankSettings();
+    if(tank.length> 0 ){
+
+        const runSeconds = parseInt(ml / parseFloat(tank.ml_s) / 2);
+        const sleepSeconds = 2;
+
+        await http(`http://${options.host}${options.pompEndpoint}?p=1&${runSeconds}:${sleepSeconds}`)
+            .then((data) => {
+                if (typeof data.return_value !== "undefined")
+                    success = data.return_value === 1;
+            })
+            .catch((err) => {
+                console.log(err);
+                success = false
+            })
+
+    }else{
+        success = false;
+    }
     return success;
 }
 

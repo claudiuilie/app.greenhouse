@@ -1,10 +1,12 @@
-
 <div class="container">
-    {{>greenhouse_growth}}
-</div>
-<div class="container">
-    {{>greenhouse_cycle}}
-</div>
-<div class="container">
-    {{>greenhouse_scheduler}}
+    {{#if greenhouseGrowth}}
+        <div class="mt-3 text-success mb-3">
+            <h5>
+                <i class="fad fa-hand-holding-seedling fa-lg"></i> Current growth
+            </h5>
+        </div>
+        <div class="container">
+            {{>greenhouse_cycle}}
+        </div>
+    {{/if}}
 </div>

@@ -27,8 +27,8 @@ router.get('/', async (req, res, next) => {
         const y = greenhouseStatus.soil_moisture_2;
         const dry = soilMoistureSettings.dry;
         const wet = soilMoistureSettings.wet;
-        greenhouseStatus["percentage_moisture_1"] = ((x - dry) * 100 / (wet - dry)).toFixed(2);
-        greenhouseStatus["percentage_moisture_2"] = ((y - dry) * 100 / (wet - dry)).toFixed(2);
+        greenhouseStatus["percentage_moisture_1"] = ((x - dry) * 100 / (wet - dry)).toFixed(1);
+        greenhouseStatus["percentage_moisture_2"] = ((y - dry) * 100 / (wet - dry)).toFixed(1);
     }
     
     if (greenhouseHistory != null) {
@@ -127,7 +127,7 @@ router.post('/pomp', async (req, res) => {
 
     switch (pompName) {
         case "pomp" :
-            await greenhouseController.pomp(pompStatus);
+            await greenhouseController.setPomp(200);
             req.session.alert = {
                 type: 'info',
                 text: `Pomp ${pompStatus ? 'started' : 'stopped'}.`

@@ -10,6 +10,21 @@ const hbs = expressHbs.create({
         ifGreater: function (arg1, arg2, options) {
             return (arg1 > arg2) ? options.fn(this) : options.inverse(this);
         },
+        ifBetween: function (val,arg1,arg2, options) {
+            return (val >= arg1 && val <= arg2) ? options.fn(this) : options.inverse(this);
+        },
+        daysToToday: function (date) {
+            const d1 = new Date();
+            const d2 = new Date(date);
+            const dif = d1.getTime() - d2.getTime()
+            return parseInt(dif / (1000 * 3600 * 24));
+        },
+        daysDiff: function (date1,date2) {
+            const d1 = new Date(date2);
+            const d2 = new Date(date1);
+            const dif = d1.getTime() - d2.getTime()
+            return dif / (1000 * 3600 * 24);
+        },
         dateToString: function(dateString){
 
             if(typeof dateString !== 'undefined') {

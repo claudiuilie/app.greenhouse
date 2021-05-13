@@ -7,7 +7,6 @@ router.get('/', async (req, res, next) => {
 
     let greenhouseGrowth = await scheduleController.getAllActiveGrowth();
 
-    console.log(greenhouseGrowth)
     res.render('growth',
         {
             greenhouseGrowth: greenhouseGrowth,

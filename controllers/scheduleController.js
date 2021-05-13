@@ -5,7 +5,7 @@ async function getAllActiveGrowth() {
     await greenhouseScheduleDb.getActiveGrowth()
         .then(async (data)=>{
             if(data.length > 0){
-                r = data[0];
+                r = data;
             }
         })
         .catch((err)=>{
