@@ -19,7 +19,8 @@ app.engine('hbs', hbsHelper.engine);
 app.set('view engine', 'hbs');
 app.use(session({
   resave: false,
-  secret: "secret",
+  secret: "gr33nhows3",
+  maxAge: 36000,
   saveUninitialized: false
 }));
 // app.use(loggerService.consoleLogger);

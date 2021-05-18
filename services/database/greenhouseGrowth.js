@@ -4,9 +4,10 @@ const config = require('../../config/config');
 
 function getActiveSchedule(){
     return new Promise(async (resolve,reject)=>{
-        const query = `SELECT s.*,ss.name FROM schedule s 
-                            LEFT JOIN stage ss on s.stage_id = ss.id 
-                        WHERE s.active = 1;`
+        const query = `select s.*,ss.name from \`cycle\` c 
+                join schedule s on s.id = schedule_id
+                join stage ss on ss.id = s.stage_id
+                where c.active_cycle = 1;`
         try{
             const rows = await db.query(query);
             const data = helper.emptyOrRows(rows);

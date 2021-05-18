@@ -153,7 +153,7 @@ async function lightsControl(schedule) {
             }
             break;
         default:
-            console.log(`Invalid stage name ${schedule.name()}`)
+            console.log(`Invalid stage name ${schedule.name}`)
     }
 }
 
