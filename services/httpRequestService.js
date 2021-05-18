@@ -1,8 +1,18 @@
 const http = require('http');
+const eventService = require('../services/eventService');
 
-function httpRequest(options){
-    return new Promise((resolve,reject)=>{
-        http.request(options, (resp) => {
+
+function httpRequest(options) {
+    const event = {
+        event_type: "HTTP",
+        function_name: arguments.callee.caller.name,
+        event_request: JSON.stringify({options}),
+        event_result: null,
+        event_error: null
+    };
+
+    return new Promise(async (resolve, reject) => {
+        await http.request(options, (resp) => {
             let data = '';
 
             // A chunk of data has been received.
@@ -13,15 +23,25 @@ function httpRequest(options){
             // The whole response has been received. Print out the result.
             resp.on('end', () => {
 
-                if(resp.statusCode !== 200){
-                    reject(resp.statusCode +" "+ resp.statusMessage)
-                }else{
+                if (resp.statusCode !== 200) {
+                    event.event_result = JSON.stringify({
+                        statusCode: resp.statusCode,
+                        statusMessage: resp.statusMessage
+                    });
+                    reject(resp.statusCode + " " + resp.statusMessage)
+                } else {
+                    event.event_result = data;
                     resolve(JSON.parse(data));
                 }
             });
 
-        }).on('error', (error)=>{reject(error)}).end();
-    })
+        }).on('error', (error) => {
+            event.event_error = JSON.stringify(error);
+            reject(error)
+        }).on('close',  async ()=>{
+             await eventService.insertEvent(event);
+        }).end();
+    });
 }
 
 module.exports = httpRequest

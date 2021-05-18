@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const scheduleController = require('../controllers/scheduleController');
+const growthService = require('../services/database/growthService');
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
 
-    let greenhouseGrowth = await scheduleController.getAllActiveGrowth();
+    let greenhouseGrowth = await growthService.getActiveGrowth();
 
     res.render('growth',
         {

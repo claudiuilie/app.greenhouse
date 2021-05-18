@@ -1,28 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const greenhouseController = require('../controllers/greenhouseController');
-const historyController = require('../controllers/historyController');
-const scheduleController = require('../controllers/scheduleController');
+const soilService = require('../services/database/soilSettingsService');
+const historyService = require('../services/database/greenhouseHistoryService')
+const tankService = require('../services/database/tankSettingsService')
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
 
-    let greenhouseHistory = await historyController.getLastDayHistory();
+    let greenhouseHistory = await historyService.getLasDayHistory();
     let greenhouseStatus = await greenhouseController.getStats();
-    let waterTankSettings = await scheduleController.getTankSettings();
-    let soilMoistureSettings = await scheduleController.getSoilSettings();
+    let waterTankSettings = await tankService.getTankSettings();
+    let soilMoistureSettings = await soilService.getSoilSettings();
     let greenhouseTempHistory = {data: [], labels: []};
     let greenhouseHumHistory = {data: [], labels: []};
     let greenhouseSoilHistory1 = {data: [], labels: []};
     let greenhouseSoilHistory2 = {data: [], labels: []};
-
-    if(waterTankSettings != null){
+    //
+    if(waterTankSettings != null && greenhouseStatus!= null){
         let c = waterTankSettings.height - greenhouseStatus.water_level;
         waterTankSettings["current_capacity"] = (waterTankSettings.length * waterTankSettings.width * c / 1000000).toFixed(2);
         waterTankSettings["max_capacity"] = (waterTankSettings.length * waterTankSettings.width * waterTankSettings.height / 1000000).toFixed(2);
     }
 
-    if(soilMoistureSettings != null){
+    if(soilMoistureSettings != null && greenhouseStatus != null){
         const x = greenhouseStatus.soil_moisture_1;
         const y = greenhouseStatus.soil_moisture_2;
         const dry = soilMoistureSettings.dry;
@@ -30,7 +31,7 @@ router.get('/', async (req, res, next) => {
         greenhouseStatus["percentage_moisture_1"] = ((x - dry) * 100 / (wet - dry)).toFixed(1);
         greenhouseStatus["percentage_moisture_2"] = ((y - dry) * 100 / (wet - dry)).toFixed(1);
     }
-    
+
     if (greenhouseHistory != null) {
         for (let k = greenhouseHistory.length - 1; k >= 0; k--) {
             if (greenhouseHistory[k].temperature != null) {

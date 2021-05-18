@@ -1,6 +1,6 @@
 const http = require("../services/httpRequestService");
 const options = require('../config/config').greenhouse;
-const scheduleController = require('../controllers/scheduleController');
+const tankService = require('../services/database/tankSettingsService')
 let success;
 
 async function setFanIn(value) {
@@ -15,7 +15,7 @@ async function setFanIn(value) {
             success = false
         })
 
-    return success
+    return success;
 }
 
 async function setFanOut(value) {
@@ -49,7 +49,7 @@ async function setVegLamp(value) {
 async function setFruitLamp(value) {
     await http(`http://${options.host}/digital/6/${value ? 0 : 1}`)
         .then((data) => {
-            if (typeof data!== "undefined")
+            if (typeof data !== "undefined")
                 success = true;
         })
         .catch((err) => {
@@ -61,8 +61,8 @@ async function setFruitLamp(value) {
 
 async function setPomp(ml) {
 
-    const tank = await scheduleController.getTankSettings();
-    if(tank.length> 0 ){
+    const tank = await tankService.getTankSettings();
+    if (tank.length > 0) {
 
         const runSeconds = parseInt(ml / parseFloat(tank.ml_s) / 2);
         const sleepSeconds = 2;
@@ -77,7 +77,7 @@ async function setPomp(ml) {
                 success = false
             })
 
-    }else{
+    } else {
         success = false;
     }
     return success;

@@ -1,9 +1,9 @@
 const CronJobManager = require('cron-job-manager');
-const scheduleController = require('../controllers/scheduleController');
+const scheduleService = require('../services/database/scheduleService')
+const historyService = require('../services/database/greenhouseHistoryService')
+const fanService = require('../services/database/fanSettingsService')
 const greenhouseController = require('../controllers/greenhouseController');
-const historyController = require('../controllers/historyController');
-const fanSettingsController = require('../controllers/fanSettingsController');
-const DateAndTime = require('../helpers/dateAndTipeHelper');
+const DateAndTime = require('../helpers/dateAndTimeHelper');
 let greenhouseJobManager;
 
 function createJobs() {
@@ -66,11 +66,11 @@ async function historyJob() {
         insertValues.fruit_lamp_off = gStats.fruit_lamp_off;
     }
 
-    await historyController.insertIntoHistory(insertValues)
+    await historyService.insertHistory(insertValues);
 }
 
 async function monitorJob() {
-    let schedule = await scheduleController.getActiveSchedule();
+    let schedule = await scheduleService.getActiveSchedule();
     let greenHouseStats = await greenhouseController.getStats();
 
     if (schedule && greenHouseStats) {
@@ -81,7 +81,7 @@ async function monitorJob() {
         //todo hum control
         //todo soil moisture control
         await tempControl(tempInRange, schedule, greenHouseStats)
-        await lightsControl(schedule);
+        await lightsControl(schedule, greenHouseStats);
 
     }
 
@@ -89,73 +89,86 @@ async function monitorJob() {
 
 async function tempControl(inRange, schedule, greenHouseStats) {
 
-    const fanSettings = await fanSettingsController.getFabSettings();
+    const fanSettings = await fanService.getSettings();
 
     if (inRange) {
         switch (schedule.max_temp - greenHouseStats.temperature) {
             case 0 :
-                await greenhouseController.setFanIn(fanSettings.max * 0.8);
-                await greenhouseController.setFanOut(fanSettings.max * 0.8);
+                await controlFans(fanSettings.max * 0.8, fanSettings.max * 0.8, greenHouseStats);
                 break;
             case 1 :
-                await greenhouseController.setFanIn(fanSettings.max * 0.6);
-                await greenhouseController.setFanOut(fanSettings.max * 0.8);
+                await controlFans(fanSettings.max * 0.6, fanSettings.max * 0.8, greenHouseStats);
                 break;
             case 2 :
-                await greenhouseController.setFanIn(fanSettings.max * 0.4);
-                await greenhouseController.setFanOut(fanSettings.max * 0.6);
+                await controlFans(fanSettings.max * 0.4, fanSettings.max * 0.6, greenHouseStats);
                 break;
             case 3 :
-                await greenhouseController.setFanIn(fanSettings.max * 0.4);
-                await greenhouseController.setFanOut(fanSettings.max * 0.4);
+                await controlFans(fanSettings.max * 0.4, fanSettings.max * 0.4, greenHouseStats);
                 break;
             default :
-                await greenhouseController.setFanIn(fanSettings.max * 0.3);
-                await greenhouseController.setFanOut(fanSettings.max * 0.3);
+                await controlFans(fanSettings.max * 0.3, fanSettings.max * 0.3, greenHouseStats);
                 break;
         }
     } else if (greenHouseStats.temperature > schedule.max_temp) {
-        await greenhouseController.setFanIn(fanSettings.max);
-        await greenhouseController.setFanOut(fanSettings.max);
+        await controlFans(fanSettings.max, fanSettings.max, greenHouseStats);
     } else {
-        await greenhouseController.setFanIn(fanSettings.min);
-        await greenhouseController.setFanOut(fanSettings.min + 1); //todo change arduino logic to permin 0 value
+        await controlFans(fanSettings.min, fanSettings.min, greenHouseStats);
     }
 }
 
-async function lightsControl(schedule) {
+async function lightsControl(schedule, greenHouseStats) {
     switch (schedule.name) {
         case "SEED":
             if (checkHours(schedule.lamp_start, schedule.lamp_stop)) {
-                await greenhouseController.setVegLamp(true);
-                await greenhouseController.setFruitLamp(false);
+                await controlLights(true,false, greenHouseStats);
             } else {
-                await greenhouseController.setVegLamp(false);
-                await greenhouseController.setFruitLamp(false);
+                await controlLights(false,false, greenHouseStats);
             }
             break;
         case "VEG":
             if (checkHours(schedule.lamp_start, schedule.lamp_stop)) {
-                await greenhouseController.setVegLamp(true);
-                await greenhouseController.setFruitLamp(false);
+                await controlLights(true,false, greenHouseStats);
             } else {
-                await greenhouseController.setVegLamp(false);
-                await greenhouseController.setFruitLamp(false);
+                await controlLights(false,false, greenHouseStats);
             }
             break;
         case "FLOWER":
             if (checkHours(schedule.lamp_start, schedule.lamp_stop)) {
-                await greenhouseController.setVegLamp(true);
-                await greenhouseController.setFruitLamp(true);
+                await controlLights(true,true, greenHouseStats);
             } else {
-                await greenhouseController.setFruitLamp(false);
-                await greenhouseController.setVegLamp(false);
+                await controlLights(false,false, greenHouseStats);
             }
             break;
         default:
             console.log(`Invalid stage name ${schedule.name}`)
     }
 }
+
+async function controlFans(fanInSettings,fanOutSettings, greenHouseStats){
+    try{
+        if(greenHouseStats.fan_in !== fanInSettings)
+            await greenhouseController.setFanIn(fanInSettings);
+
+        if(greenHouseStats.fan_out !== fanOutSettings)
+            await greenhouseController.setFanOut(fanOutSettings);
+    }catch(err){
+        console.log(err)
+    }
+}
+
+async function controlLights(startVegLamp, startFruitLamp, greenhouseStats){
+    try{
+        if(greenhouseStats.veg_lamp_off === startVegLamp)
+            await greenhouseController.setVegLamp(startVegLamp);
+
+        if(greenhouseStats.fruit_lamp_off === startFruitLamp)
+            await greenhouseController.setFruitLamp(startFruitLamp);
+    }catch(err){
+        console.log(err)
+    }
+}
+
+
 
 function isInRange(val, min, max) {
     return val >= min && val <= max;
