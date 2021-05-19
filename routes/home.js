@@ -4,6 +4,7 @@ const greenhouseController = require('../controllers/greenhouseController');
 const soilService = require('../services/database/soilSettingsService');
 const historyService = require('../services/database/greenhouseHistoryService')
 const tankService = require('../services/database/tankSettingsService')
+const eventsService = require('../services/database/eventsDbService');
 
 /* GET home page. */
 router.get('/', async (req, res, next) => {
@@ -12,11 +13,12 @@ router.get('/', async (req, res, next) => {
     let greenhouseStatus = await greenhouseController.getStats();
     let waterTankSettings = await tankService.getTankSettings();
     let soilMoistureSettings = await soilService.getSoilSettings();
+    let events = await eventsService.getGreenhouseEvents();
     let greenhouseTempHistory = {data: [], labels: []};
     let greenhouseHumHistory = {data: [], labels: []};
     let greenhouseSoilHistory1 = {data: [], labels: []};
     let greenhouseSoilHistory2 = {data: [], labels: []};
-    //
+
     if(waterTankSettings != null && greenhouseStatus!= null){
         let c = waterTankSettings.height - greenhouseStatus.water_level;
         waterTankSettings["current_capacity"] = (waterTankSettings.length * waterTankSettings.width * c / 1000000).toFixed(2);
@@ -51,6 +53,7 @@ router.get('/', async (req, res, next) => {
         history: greenhouseHistory,
         status: greenhouseStatus,
         tank: waterTankSettings,
+        events: events,
         tempHistory: greenhouseTempHistory,
         humHistory: greenhouseHumHistory,
         soilHistory_1: greenhouseSoilHistory1,
