@@ -27,9 +27,29 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse"
+                         id="fanInEvents">
                         <div class="dropdown-divider"></div>
+                        {{#each events}}
+                            {{#ifEquals this.function_name 'setFanIn'}}
+                                <div class="col p-0 text-center">
+                                    <small>
+                                        <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-danger {{else}}text-success {{/ifEquals}}"><i
+                                                class="fad fa-calendar-day">
+                                        </i>{{this.event_date}} </br>Event - {{this.function_name}}
+                                            ({{this.event_value}})
+                                        </small>
+                                    </small>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                            {{/ifEquals}}
+                        {{/each}}
+                    </div>
+                    <div class="row row-cols-2 p-2">
                         <div class="col">
-                            <div class="custom-control custom-switch text-center">
+                            <div class="custom-control custom-switch text-center float-left">
                                 <form method="POST" action="/fan">
                                     <input type="checkbox"
                                            onchange="this.closest('form').submit()"
@@ -41,6 +61,12 @@
                                            value="{{#ifGreater status.fan_in 0}}0{{else}}1{{/ifGreater}}"/>
                                 </form>
                             </div>
+                        </div>
+                        <div class="col">
+                            <i class="fad fa-history btn text-info fa-lg float-right" data-toggle="collapse"
+                               href="#fanInEvents"
+                               role="button" aria-expanded="false" aria-controls="pompEvents">
+                            </i>
                         </div>
                     </div>
                 </div>
@@ -67,9 +93,29 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse"
+                         id="fanOutEvents">
                         <div class="dropdown-divider"></div>
+                        {{#each events}}
+                            {{#ifEquals this.function_name 'setFanOut'}}
+                                <div class="col p-0 text-center">
+                                    <small>
+                                        <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-danger {{else}}text-success {{/ifEquals}}"><i
+                                                class="fad fa-calendar-day">
+                                        </i>{{this.event_date}} </br>Event - {{this.function_name}}
+                                            ({{this.event_value}})
+                                        </small>
+                                    </small>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                            {{/ifEquals}}
+                        {{/each}}
+                    </div>
+                    <div class="row row-cols-2 p-2">
                         <div class="col">
-                            <div class="custom-control custom-switch text-center">
+                            <div class="custom-control custom-switch text-center float-left">
                                 <form method="POST" action="/fan">
                                     <input type="checkbox"
                                            onchange="this.closest('form').submit()"
@@ -81,6 +127,12 @@
                                            value="{{#ifGreater status.fan_out 0}}0{{else}}1{{/ifGreater}}"/>
                                 </form>
                             </div>
+                        </div>
+                        <div class="col">
+                            <i class="fad fa-history btn text-info fa-lg float-right" data-toggle="collapse"
+                               href="#fanOutEvents"
+                               role="button" aria-expanded="false" aria-controls="pompEvents">
+                            </i>
                         </div>
                     </div>
                 </div>
@@ -99,9 +151,27 @@
                         </div>
                     </div>
                     <div class="dropdown-divider"></div>
-                    <div class="row row-cols-1 p-2">
+                    <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse"
+                         id="flowerEvents">
+                        <div class="dropdown-divider"></div>
+                        {{#each events}}
+                            {{#ifEquals this.function_name 'setVegLamp'}}
+                                <div class="col p-0 text-center">
+                                    <small>
+                                        <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-success {{else}}text-danger {{/ifEquals}}"><i
+                                                class="fad fa-calendar-day">
+                                        </i>{{this.event_date}} </br>Event - {{this.function_name}}
+                                            ({{this.event_value}})
+                                        </small>
+                                    </small>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                            {{/ifEquals}}
+                        {{/each}}
+                    </div>
+                    <div class="row row-cols-2 p-2">
                         <div class="col">
-                            <div class="custom-control custom-switch text-center">
+                            <div class="custom-control custom-switch text-center float-left">
                                 <form method="POST" action="/lights">
                                     <input type="checkbox"
                                            onchange="this.closest('form').submit()"
@@ -113,6 +183,12 @@
                                            value="{{#if status.veg_lamp_off}}0{{else}}1{{/if}}"/>
                                 </form>
                             </div>
+                        </div>
+                        <div class="col">
+                            <i class="fad fa-history btn text-info fa-lg float-right" data-toggle="collapse"
+                               href="#flowerEvents"
+                               role="button" aria-expanded="false" aria-controls="pompEvents">
+                            </i>
                         </div>
                     </div>
                 </div>
@@ -128,6 +204,24 @@
                                     status.fruit_lamp_off}}text-danger{{else}}fa-lightbulb-on text-warning{{/if}}"
                                style="font-size: 2rem"></i>
                         </div>
+                    </div>
+                    <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse"
+                         id="fruitEvents">
+                        <div class="dropdown-divider"></div>
+                        {{#each events}}
+                            {{#ifEquals this.function_name 'setFruitLamp'}}
+                                <div class="col p-0 text-center">
+                                    <small>
+                                        <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-success {{else}}text-danger {{/ifEquals}}"><i
+                                                class="fad fa-calendar-day">
+                                        </i>{{this.event_date}} </br>Event - {{this.function_name}}
+                                            ({{this.event_value}})
+                                        </small>
+                                    </small>
+                                </div>
+                                <div class="dropdown-divider"></div>
+                            {{/ifEquals}}
+                        {{/each}}
                     </div>
                     <div class="dropdown-divider"></div>
                     <div class="row row-cols-2 p-2">
@@ -146,8 +240,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <i class="fad fa-history btn text-info fa-lg float-right" data-toggle="collapse" href="#pompEvents"
-                               role="button" aria-expanded="false" aria-controls="pompEvents">
+                            <i class="fad fa-history btn text-info fa-lg float-right" data-toggle="collapse" href="#fruitEvents" role="button" aria-expanded="false" aria-controls="pompEvents">
                             </i>
                         </div>
                     </div>
@@ -160,7 +253,8 @@
                             <span class="card-title mb-0 ">Pomp</span>
                         </div>
                         <div class="col p-2 text-center mt-1">
-                            <i class="fad fa-faucet-drip {{#if status.pomp_off}}text-danger{{else}}text-info{{/if}}" style="font-size: 2rem"></i>
+                            <i class="fad fa-faucet-drip {{#if status.pomp_off}}text-danger{{else}}text-info{{/if}}"
+                               style="font-size: 2rem"></i>
                         </div>
                     </div>
                     <div class="row row-cols-1 ">
@@ -181,23 +275,29 @@
                                 </div>
                             </div>
                             <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse" id="pompEvents">
+                                <div class="dropdown-divider"></div>
                                 {{#each events}}
                                     {{#ifEquals this.function_name 'pomp'}}
                                         <div class="col p-0 text-center">
-                                            <small class="font-weight-bold {{#ifEquals this.event_value '1'}}text-success {{else}}text-danger {{/ifEquals}}"><i class="fad fa-calendar-day">
-                                                </i>{{this.event_date}} - {{this.function_name}}({{this.event_value}})
+                                            <small>
+                                                <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-success {{else}}text-danger {{/ifEquals}}"><i class="fad fa-calendar-day">
+                                                </i>{{this.event_date}} </br>Event - {{this.function_name}}
+                                                    ({{this.event_value}})
+                                                </small>
                                             </small>
                                         </div>
+                                        <div class="dropdown-divider"></div>
                                     {{else ifEquals this.function_name 'setPomp'}}
                                         <div class="col p-0 text-center">
-                                            <small class="text-success font-weight-bold"><i class="fad fa-calendar-day">
-                                            </i>{{this.event_date}} - {{this.function_name}}({{this.event_value}})
+                                            <small>
+                                                <small class="text-success font-weight-bold"><i
+                                                        class="fad fa-calendar-day">
+                                                </i>{{this.event_date}}  {{this.function_name}}({{this.event_value}})
+                                                </small>
                                             </small>
                                         </div>
                                     {{/ifEquals}}
                                 {{/each}}
-                            </div>
-                            <div class="row row-cols-1 p-1 rounded card-body justify-content-start">
                             </div>
                         </div>
                     </div>
@@ -218,7 +318,8 @@
                             </div>
                         </div>
                         <div class="col">
-                            <i class="fad fa-history btn text-info fa-lg float-right" data-toggle="collapse" href="#pompEvents"
+                            <i class="fad fa-history btn text-info fa-lg float-right" data-toggle="collapse"
+                               href="#pompEvents"
                                role="button" aria-expanded="false" aria-controls="pompEvents">
                             </i>
                         </div>

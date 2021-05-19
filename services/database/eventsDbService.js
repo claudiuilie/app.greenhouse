@@ -4,32 +4,32 @@ const helper = require('../../helpers/dbHelper');
 const query = `(select function_name,SUBSTRING(event_request,REGEXP_INSTR(event_request, '=')+1,REGEXP_INSTR(event_request, '"}') - REGEXP_INSTR(event_request, '=')-1) "event_value",event_result,event_error,DATE_FORMAT(event_date, "%d/%m/%Y %H:%i:%S") "event_date"
                 from events
                 where function_name = 'setFanIn' 
-                order by event_id desc limit 2)
+                order by event_id desc limit 5)
                 union all 
                 (select function_name,SUBSTRING(event_request,REGEXP_INSTR(event_request, '=')+1,REGEXP_INSTR(event_request, '"}') - REGEXP_INSTR(event_request, '=')-1) "event_value",event_result,event_error,DATE_FORMAT(event_date, "%d/%m/%Y %H:%i:%S") "event_date"
                 from events
                 where function_name = 'setFanOut' 
-                order by event_id desc limit 2)
+                order by event_id desc limit 5)
                 union all 
                 (select function_name,SUBSTRING(event_request,REGEXP_INSTR(event_request, 'digital')+10,1) "event_value", event_result,event_error,DATE_FORMAT(event_date, "%d/%m/%Y %H:%i:%S") "event_date" 
                 from events
                 where function_name = 'setVegLamp' 
-                order by event_id desc limit 2)
+                order by event_id desc limit 4)
                 union all 
                 (select function_name,SUBSTRING(event_request,REGEXP_INSTR(event_request, 'digital')+10,1) "event_value", event_result,event_error,DATE_FORMAT(event_date, "%d/%m/%Y %H:%i:%S") "event_date" 
                 from events
                 where function_name = 'setFruitLamp' 
-                order by event_id desc limit 2)
+                order by event_id desc limit 4)
                 union all 
                 (select function_name,SUBSTRING(event_request,REGEXP_INSTR(event_request, 'digital')+10,1) "event_value", event_result,event_error,DATE_FORMAT(event_date, "%d/%m/%Y %H:%i:%S") "event_date"  
                 from events
                 where function_name = 'pomp' 
-                order by event_id desc limit 2)
+                order by event_id desc limit 4)
                 union all 
                 (select function_name,SUBSTRING(event_request,REGEXP_INSTR(event_request, '&')+1,REGEXP_INSTR(event_request, '"}')-1 - REGEXP_INSTR(event_request, '&')) "event_value",event_result,event_error,DATE_FORMAT(event_date, "%d/%m/%Y %H:%i:%S") "event_date"
                 from events
                 where function_name = 'setPomp' 
-                order by event_id desc limit 2)`;
+                order by event_id desc limit 4)`;
 
 async function getGreenhouseEvents() {
     let r;
