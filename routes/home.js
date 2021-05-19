@@ -128,7 +128,7 @@ router.post('/pomp', async (req, res) => {
 
     switch (pompName) {
         case "pomp" :
-            await greenhouseController.setPomp(200);
+            await greenhouseController.pomp(pompStatus);
             req.session.alert = {
                 type: 'info',
                 text: `Pomp ${pompStatus ? 'started' : 'stopped'}.`

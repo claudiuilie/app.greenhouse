@@ -33,10 +33,6 @@ function createJobs() {
 
 }
 
-function getJobManager() {
-    return greenhouseJobManager;
-}
-
 async function historyJob() {
     const insertValues = {
         temperature: null,
@@ -78,6 +74,8 @@ async function monitorJob() {
 
         let tempInRange = isInRange(greenHouseStats.temperature, schedule.min_temp, schedule.max_temp);
         let humInRange = isInRange(greenHouseStats.humidity, schedule.min_humidity, schedule.max_humidity);
+        let moistInRange1 = isInRange(greenHouseStats.soil_moisture_1, schedule.wet, schedule.dry);
+        let moistInRange2 = isInRange(greenHouseStats.soil_moisture_2, schedule.wet, schedule.dry);
         //todo hum control
         //todo soil moisture control
         await tempControl(tempInRange, schedule, greenHouseStats)
@@ -94,25 +92,25 @@ async function tempControl(inRange, schedule, greenHouseStats) {
     if (inRange) {
         switch (schedule.max_temp - greenHouseStats.temperature) {
             case 0 :
-                await controlFans(fanSettings.max * 0.8, fanSettings.max * 0.8, greenHouseStats);
+                await setFans(fanSettings.max * 0.8, fanSettings.max * 0.8, greenHouseStats);
                 break;
             case 1 :
-                await controlFans(fanSettings.max * 0.6, fanSettings.max * 0.8, greenHouseStats);
+                await setFans(fanSettings.max * 0.6, fanSettings.max * 0.8, greenHouseStats);
                 break;
             case 2 :
-                await controlFans(fanSettings.max * 0.4, fanSettings.max * 0.6, greenHouseStats);
+                await setFans(fanSettings.max * 0.4, fanSettings.max * 0.6, greenHouseStats);
                 break;
             case 3 :
-                await controlFans(fanSettings.max * 0.4, fanSettings.max * 0.4, greenHouseStats);
+                await setFans(fanSettings.max * 0.4, fanSettings.max * 0.4, greenHouseStats);
                 break;
             default :
-                await controlFans(fanSettings.max * 0.3, fanSettings.max * 0.3, greenHouseStats);
+                await setFans(fanSettings.max * 0.3, fanSettings.max * 0.3, greenHouseStats);
                 break;
         }
     } else if (greenHouseStats.temperature > schedule.max_temp) {
-        await controlFans(fanSettings.max, fanSettings.max, greenHouseStats);
+        await setFans(fanSettings.max, fanSettings.max, greenHouseStats);
     } else {
-        await controlFans(fanSettings.min, fanSettings.min, greenHouseStats);
+        await setFans(fanSettings.min, fanSettings.min, greenHouseStats);
     }
 }
 
@@ -120,23 +118,23 @@ async function lightsControl(schedule, greenHouseStats) {
     switch (schedule.name) {
         case "SEED":
             if (checkHours(schedule.lamp_start, schedule.lamp_stop)) {
-                await controlLights(true,false, greenHouseStats);
+                await setLights(true,false, greenHouseStats);
             } else {
-                await controlLights(false,false, greenHouseStats);
+                await setLights(false,false, greenHouseStats);
             }
             break;
         case "VEG":
             if (checkHours(schedule.lamp_start, schedule.lamp_stop)) {
-                await controlLights(true,false, greenHouseStats);
+                await setLights(true,false, greenHouseStats);
             } else {
-                await controlLights(false,false, greenHouseStats);
+                await setLights(false,false, greenHouseStats);
             }
             break;
         case "FLOWER":
             if (checkHours(schedule.lamp_start, schedule.lamp_stop)) {
-                await controlLights(true,true, greenHouseStats);
+                await setLights(true,true, greenHouseStats);
             } else {
-                await controlLights(false,false, greenHouseStats);
+                await setLights(false,false, greenHouseStats);
             }
             break;
         default:
@@ -144,7 +142,7 @@ async function lightsControl(schedule, greenHouseStats) {
     }
 }
 
-async function controlFans(fanInSettings,fanOutSettings, greenHouseStats){
+async function setFans(fanInSettings,fanOutSettings, greenHouseStats){
     try{
         if(greenHouseStats.fan_in !== fanInSettings)
             await greenhouseController.setFanIn(fanInSettings);
@@ -156,7 +154,7 @@ async function controlFans(fanInSettings,fanOutSettings, greenHouseStats){
     }
 }
 
-async function controlLights(startVegLamp, startFruitLamp, greenhouseStats){
+async function setLights(startVegLamp, startFruitLamp, greenhouseStats){
     try{
         if(greenhouseStats.veg_lamp_off === startVegLamp)
             await greenhouseController.setVegLamp(startVegLamp);
@@ -167,8 +165,6 @@ async function controlLights(startVegLamp, startFruitLamp, greenhouseStats){
         console.log(err)
     }
 }
-
-
 
 function isInRange(val, min, max) {
     return val >= min && val <= max;
@@ -187,6 +183,9 @@ function checkHours(startHour, stopHour) {
     }
 }
 
+function getJobManager() {
+    return greenhouseJobManager;
+}
 
 module.exports = {
     createJobs,
