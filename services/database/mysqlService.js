@@ -32,7 +32,6 @@ function query(sql, params) {
 }
 
 async function logEvent(event) {
-    console.log(event)
     if (typeof event !== undefined) {
         try {
             await eventService.insertEvent(event);

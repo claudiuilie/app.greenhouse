@@ -3,6 +3,8 @@ const scheduleService = require('../services/database/scheduleService')
 const historyService = require('../services/database/greenhouseHistoryService')
 const fanService = require('../services/database/fanSettingsService')
 const greenhouseController = require('../controllers/greenhouseController');
+const soilMoistureHelper = require('../helpers/soilMoistureHelper');
+const eventService = require('../services/database/eventsDbService');
 const DateAndTime = require('../helpers/dateAndTimeHelper');
 let greenhouseJobManager;
 
@@ -66,23 +68,33 @@ async function historyJob() {
 }
 
 async function monitorJob() {
-    let schedule = await scheduleService.getActiveSchedule();
-    let greenHouseStats = await greenhouseController.getStats();
+    const schedule = await scheduleService.getActiveSchedule();
+    const greenHouseStats = await greenhouseController.getStats();
 
     if (schedule && greenHouseStats) {
-
-
-        let tempInRange = isInRange(greenHouseStats.temperature, schedule.min_temp, schedule.max_temp);
-        let humInRange = isInRange(greenHouseStats.humidity, schedule.min_humidity, schedule.max_humidity);
-        let moistInRange1 = isInRange(greenHouseStats.soil_moisture_1, schedule.wet, schedule.dry);
-        let moistInRange2 = isInRange(greenHouseStats.soil_moisture_2, schedule.wet, schedule.dry);
+        const tempInRange = isInRange(greenHouseStats.temperature, schedule.min_temp, schedule.max_temp);
+        const humInRange = isInRange(greenHouseStats.humidity, schedule.min_humidity, schedule.max_humidity);
+        const moistInRange1 = isInRange(greenHouseStats.soil_moisture_1, schedule.wet, schedule.dry);
+        const moistInRange2 = isInRange(greenHouseStats.soil_moisture_2, schedule.wet, schedule.dry);
         //todo hum control
-        //todo soil moisture control
         await tempControl(tempInRange, schedule, greenHouseStats)
         await lightsControl(schedule, greenHouseStats);
-
+        // await pompControl(moistInRange1,moistInRange2,greenHouseStats.soil_moisture_1, greenHouseStats.soil_moisture_2, schedule);
     }
 
+}
+
+async function pompControl(moistInRange1,moistInRange2,sensor1, sensor2, schedule) {
+    const minMoist = 70;
+    const ml = 200;
+    if(moistInRange1 && moistInRange2){
+        const pompOff = await eventService.getPompEvents();
+        const s1Percent =  soilMoistureHelper.moisturePercent(sensor1, schedule.dry, schedule.wet);
+        const s2Percent =  soilMoistureHelper.moisturePercent(sensor2, schedule.dry, schedule.wet)
+        if(s1Percent < minMoist && s2Percent < minMoist && typeof pompOff.can_run == "number" ? pompOff.can_run : 0){
+            await greenhouseController.setPomp(ml);
+        }
+    }
 }
 
 async function tempControl(inRange, schedule, greenHouseStats) {

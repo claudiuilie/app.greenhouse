@@ -31,15 +31,13 @@
                     <div class="dropdown-divider"></div>
                     <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse"
                          id="fanInEvents">
-                        <div class="dropdown-divider"></div>
                         {{#each events}}
                             {{#ifEquals this.function_name 'setFanIn'}}
                                 <div class="col p-0 text-center">
                                     <small>
                                         <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-danger {{else}}text-success {{/ifEquals}}"><i
                                                 class="fad fa-calendar-day">
-                                        </i>{{this.event_date}} </br>Event - {{this.function_name}}
-                                            ({{this.event_value}})
+                                        </i>{{this.event_date}} - [{{#percent this.event_value 255}}{{/percent}}%]
                                         </small>
                                     </small>
                                 </div>
@@ -97,15 +95,13 @@
                     <div class="dropdown-divider"></div>
                     <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse"
                          id="fanOutEvents">
-                        <div class="dropdown-divider"></div>
                         {{#each events}}
                             {{#ifEquals this.function_name 'setFanOut'}}
                                 <div class="col p-0 text-center">
                                     <small>
                                         <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-danger {{else}}text-success {{/ifEquals}}"><i
                                                 class="fad fa-calendar-day">
-                                        </i>{{this.event_date}} </br>Event - {{this.function_name}}
-                                            ({{this.event_value}})
+                                        </i>{{this.event_date}} - [{{#percent this.event_value 255}}{{/percent}}%]
                                         </small>
                                     </small>
                                 </div>
@@ -153,15 +149,13 @@
                     <div class="dropdown-divider"></div>
                     <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse"
                          id="flowerEvents">
-                        <div class="dropdown-divider"></div>
                         {{#each events}}
                             {{#ifEquals this.function_name 'setVegLamp'}}
                                 <div class="col p-0 text-center">
                                     <small>
                                         <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-success {{else}}text-danger {{/ifEquals}}"><i
                                                 class="fad fa-calendar-day">
-                                        </i>{{this.event_date}} </br>Event - {{this.function_name}}
-                                            ({{this.event_value}})
+                                        </i>{{this.event_date}} - {{#ifEquals this.event_value '1'}}[stop]{{else}}[start]{{/ifEquals}}
                                         </small>
                                     </small>
                                 </div>
@@ -205,17 +199,15 @@
                                style="font-size: 2rem"></i>
                         </div>
                     </div>
-                    <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse"
-                         id="fruitEvents">
-                        <div class="dropdown-divider"></div>
+                    <div class="dropdown-divider"></div>
+                    <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse"  id="fruitEvents">
                         {{#each events}}
                             {{#ifEquals this.function_name 'setFruitLamp'}}
                                 <div class="col p-0 text-center">
                                     <small>
                                         <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-success {{else}}text-danger {{/ifEquals}}"><i
                                                 class="fad fa-calendar-day">
-                                        </i>{{this.event_date}} </br>Event - {{this.function_name}}
-                                            ({{this.event_value}})
+                                        </i>{{this.event_date}} - {{#ifEquals this.event_value '1'}}[stop]{{else}}[start]{{/ifEquals}}
                                         </small>
                                     </small>
                                 </div>
@@ -223,7 +215,6 @@
                             {{/ifEquals}}
                         {{/each}}
                     </div>
-                    <div class="dropdown-divider"></div>
                     <div class="row row-cols-2 p-2">
                         <div class="col">
                             <div class="custom-control custom-switch text-center">
@@ -264,7 +255,7 @@
                             </div>
                             <div class="progress w-100">
                                 <div class="progress-bar progress-bar-striped progress-bar-animated {{#ifBetween
-                                        status.water_level 160 190}}bg-danger{{/ifBetween}} {{#ifBetween
+                                        status.water_level 160 tank.height}}bg-danger{{/ifBetween}} {{#ifBetween
                                         status.water_level 130 160}}bg-warning{{/ifBetween}} {{#ifBetween
                                         status.water_level 30 130}}bg-warning{{/ifBetween}}"
                                      role="progressbar"
@@ -281,8 +272,7 @@
                                         <div class="col p-0 text-center">
                                             <small>
                                                 <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-success {{else}}text-danger {{/ifEquals}}"><i class="fad fa-calendar-day">
-                                                </i>{{this.event_date}} </br>Event - {{this.function_name}}
-                                                    ({{this.event_value}})
+                                                </i>{{this.event_date}} - {{#ifEquals this.event_value '1'}}[stop]{{else}}[start]{{/ifEquals}}
                                                 </small>
                                             </small>
                                         </div>
@@ -292,7 +282,7 @@
                                             <small>
                                                 <small class="text-success font-weight-bold"><i
                                                         class="fad fa-calendar-day">
-                                                </i>{{this.event_date}}</br>Event - {{this.function_name}}({{this.event_value}})
+                                                </i>{{this.event_date}} - [{{this.event_value}}ml]
                                                 </small>
                                             </small>
                                         </div>

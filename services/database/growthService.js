@@ -25,7 +25,6 @@ async function getActiveGrowth() {
             console.log(err);
         });
     return helper.emptyOrRows(r);
-
 }
 
 module.exports = {
