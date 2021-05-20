@@ -1,8 +1,19 @@
-const path = require('path');
-const httpAuth = require('http-auth');
-const authConnect = require("http-auth-connect");
-const basicAuth = httpAuth.basic({
-    file: path.join(__dirname, '../users.htpasswd'),
-});
+const db = require('./database/mysqlService');
+const helper = require('../helpers/dbHelper');
 
-module.exports = authConnect(basicAuth);
+function getUser(username, password) {
+    const credQuery = `Select * from users where username = ? and password = ?;`
+    return new Promise(async (resolve, reject) => {
+        try {
+            const rows = await db.query(credQuery, [username, password]);
+            const data = helper.emptyOrRows(rows);
+            resolve(data[0]);
+        } catch (err) {
+            reject(err)
+        }
+    });
+}
+
+module.exports = {
+    getUser
+}
