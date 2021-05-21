@@ -1,0 +1,63 @@
+<div class="col p-1">
+    <div class="container card shadow mb-3rounded-lg">
+        <div class="row row-cols-2 ">
+            <div class="col p-2 text-center">
+                <smal class="card-title text-muted float-left">Fan Out</smal>
+            </div>
+            <div class="col p-2 text-center mt-1">
+                <i class="fad fa-fan {{#if status.fan_out}}text-success{{else}}text-danger{{/if}}"
+                   style="font-size: 2rem"></i>
+            </div>
+        </div>
+        <div class="row row-cols-1 p-2 ">
+            <div class="col mb-2">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                         role="progressbar" style="width: {{#percent status.fan_out 255}}{{/percent}}%"
+                         aria-valuenow="{{status.fan_out}}" aria-valuemin="0" aria-valuemax="255">
+                        {{#percent status.fan_out 255}}{{/percent}}%
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse"
+             id="fanOutEvents">
+            {{#each events}}
+                {{#ifEquals this.function_name 'setFanOut'}}
+                    <div class="col p-0 text-center">
+                        <small>
+                            <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-danger {{else}}text-success {{/ifEquals}}"><i
+                                    class="fad fa-calendar-day">
+                            </i>{{this.event_date}} - [{{#percent this.event_value 255}}{{/percent}}%]
+                            </small>
+                        </small>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                {{/ifEquals}}
+            {{/each}}
+        </div>
+        <div class="row row-cols-2 p-2">
+            <div class="col">
+                <div class="custom-control custom-switch text-center float-left">
+                    <form method="POST" action="/fan">
+                        <input type="checkbox"
+                               onchange="this.closest('form').submit()"
+                               class="custom-control-input" id="id_fan_out"
+                            {{#ifGreater status.fan_out 0}} checked {{/ifGreater}}/>
+                        <label class="custom-control-label" for="id_fan_out"></label>
+                        <input type="hidden" name="name" value="fanOut"/>
+                        <input type="hidden" name="status"
+                               value="{{#ifGreater status.fan_out 0}}0{{else}}1{{/ifGreater}}"/>
+                    </form>
+                </div>
+            </div>
+            <div class="col">
+                <i class="fad fa-history btn text-info fa-lg float-right" data-toggle="collapse"
+                   href="#fanOutEvents"
+                   role="button" aria-expanded="false" aria-controls="pompEvents">
+                </i>
+            </div>
+        </div>
+    </div>
+</div>

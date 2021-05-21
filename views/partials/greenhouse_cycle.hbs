@@ -72,11 +72,11 @@
                         {{/if}}
                         {{#if this.active_cycle}}
                             <div class="col p-1">
-                                <small class="text-muted font-weight-bold">Progress: {{#daysToToday this.start_date_format}}{{/daysToToday}} days</small>
+                                <small class="text-muted font-weight-bold">Progress: {{this.cycle_progress}} days</small>
                             </div>
                         {{else}}
                             <div class="col p-1">
-                                <small class="text-muted font-weight-bold">Total: {{#daysDiff this.start_date_format this.end_date_format}}{{/daysDiff}} days</small>
+                                <small class="text-muted font-weight-bold">Total: {{this.cycle_progress}} days</small>
                             </div>
                         {{/if}}
                     </div>

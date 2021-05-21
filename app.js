@@ -29,7 +29,6 @@ app.use(session({
 
 // app.use(loggerService.consoleLogger);
 app.use(loggerService.fileLogger);
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -62,7 +61,6 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/admin',adminRouter);
 app.use('/growth', growthRouter);
-
 
 cronManager.createJobs();
 

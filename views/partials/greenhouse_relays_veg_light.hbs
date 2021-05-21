@@ -1,0 +1,53 @@
+<div class="col p-1">
+    <div class="container card shadow mb-3rounded-lg">
+        <div class="row row-cols-2 ">
+            <div class="col p-2 text-center">
+                <smal class="card-title text-muted float-left">Veg lights</smal>
+            </div>
+            <div class="col p-2 text-center mt-1">
+                <i class="fad {{#if
+                        status.veg_lamp_off}}fa-lightbulb text-danger{{else}}fa-lightbulb-on text-warning{{/if}}"
+                   style="font-size: 2rem"></i>
+            </div>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse"
+             id="flowerEvents">
+            {{#each events}}
+                {{#ifEquals this.function_name 'setVegLamp'}}
+                    <div class="col p-0 text-center">
+                        <small>
+                            <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-success {{else}}text-danger {{/ifEquals}}"><i
+                                    class="fad fa-calendar-day">
+                            </i>{{this.event_date}} - {{#ifEquals this.event_value '1'}}[stop]{{else}}[start]{{/ifEquals}}
+                            </small>
+                        </small>
+                    </div>
+                    <div class="dropdown-divider"></div>
+                {{/ifEquals}}
+            {{/each}}
+        </div>
+        <div class="row row-cols-2 p-2">
+            <div class="col">
+                <div class="custom-control custom-switch text-center float-left">
+                    <form method="POST" action="/lights">
+                        <input type="checkbox"
+                               onchange="this.closest('form').submit()"
+                               class="custom-control-input" id="id_veg_lights"
+                            {{#unless status.veg_lamp_off}} checked {{/unless}}/>
+                        <label class="custom-control-label" for="id_veg_lights"></label>
+                        <input type="hidden" name="name" value="vegPhase"/>
+                        <input type="hidden" name="status"
+                               value="{{#if status.veg_lamp_off}}0{{else}}1{{/if}}"/>
+                    </form>
+                </div>
+            </div>
+            <div class="col">
+                <i class="fad fa-history btn text-info fa-lg float-right" data-toggle="collapse"
+                   href="#flowerEvents"
+                   role="button" aria-expanded="false" aria-controls="pompEvents">
+                </i>
+            </div>
+        </div>
+    </div>
+</div>

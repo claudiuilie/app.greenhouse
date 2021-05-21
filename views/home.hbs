@@ -2,5 +2,25 @@
     {{>greenhouse_general_stats}}
 </div>
 <div class="container">
-    {{>greenhouse_relays}}
+    <div class="mt-3 text-info">
+        <h5>
+            <i class="fad fa-light-switch-on"></i> Relays
+        </h5>
+    </div>
+    {{#if status}}
+        <div class="container" style="margin-bottom: 10rem">
+            <div class="row row-cols-2 p-1">
+                <!--    FAN IN        -->
+                {{>greenhouse_relays_fan_in}}
+                <!--    FAN OUT        -->
+                {{>greenhouse_relays_fan_out}}
+                <!--    VEG LIGHTS        -->
+                {{>greenhouse_relays_veg_light}}
+                <!--    FRUIT LIGHTS        -->
+                {{>greenhouse_relays_fruit_light}}
+                <!--    WATER POMP        -->
+                {{>greenhouse_relays_water_pomp}}
+            </div>
+        </div>
+    {{/if}}
 </div>

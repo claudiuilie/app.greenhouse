@@ -3,7 +3,7 @@ const router = express.Router();
 const adminController = require('../controllers/adminController');
 const jobsController = require('../controllers/jobsController');
 
-/* GET home page. */
+/* GET admin page. */
 router.get('/', async (req, res, next) => {
     res.render('admin',
         {

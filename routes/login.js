@@ -5,10 +5,10 @@ const authService = require('../services/authService');
 
 router.get('/', async (req, res, next) => {
     res.render('login', {
+        layout: 'empty',
         alert: req.session.alert
     });
 });
-
 
 router.post('/', async (req, res) => {
 
@@ -23,6 +23,7 @@ router.post('/', async (req, res) => {
         res.redirect('/');
     } else {
         res.render('login', {
+            layout: 'empty',
             info: {
                 text: 'Invalid username or password',
                 type: "danger"
