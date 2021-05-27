@@ -79,14 +79,16 @@ async function monitorJob() {
         //todo hum control
         await tempControl(tempInRange, schedule, greenHouseStats)
         await lightsControl(schedule, greenHouseStats);
-        // await pompControl(moistInRange1,moistInRange2,greenHouseStats.soil_moisture_1, greenHouseStats.soil_moisture_2, schedule);
+        await pompControl(moistInRange1,moistInRange2,greenHouseStats.soil_moisture_1, greenHouseStats.soil_moisture_2, schedule);
     }
 
 }
 
 async function pompControl(moistInRange1,moistInRange2,sensor1, sensor2, schedule) {
-    const minMoist = 70;
-    const ml = 200;
+
+    const minMoist = schedule.min_moist;
+    const ml = schedule.water_ml;
+    console.log(minMoist, ml)
     if(moistInRange1 && moistInRange2){
         const pompOff = await eventService.getPompEvents();
         const s1Percent =  soilMoistureHelper.moisturePercent(sensor1, schedule.dry, schedule.wet);
