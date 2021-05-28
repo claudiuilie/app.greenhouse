@@ -39,7 +39,7 @@ function createJobs() {
             console.log(err)
         });
     }, {
-        start: false,
+        start: process.env.MAILER_DAILY_REPORT_JOB_AUTOSTART,
         onComplete: () => {
             console.log("MAILER stopped")
         }
