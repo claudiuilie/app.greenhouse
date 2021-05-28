@@ -34,7 +34,7 @@ function createJobs() {
         }
     });
 
-    greenhouseJobManager.add("mailer", process.env.GREENHOUSE_MONITOR_JOB_INTERVAL, () => {
+    greenhouseJobManager.add("mailer", process.env.MAILER_DAILY_REPORT_JOB_INTERVAL, () => {
         mailerHelper.sendLastDayReport().catch((err)=>{
             console.log(err)
         });
