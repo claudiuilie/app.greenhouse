@@ -1,16 +1,13 @@
 const http = require('http');
 const eventService = require('../services/eventService');
-const acceptedCallers = ['setFanIn','setFanOut','setVegLamp','setFruitLamp','setPomp','pomp','sleep'];
+const Event = require('../models/Event');
+const acceptedCallers = ['setFanIn', 'setFanOut', 'setVegLamp', 'setFruitLamp', 'setPomp', 'pomp', 'sleep'];
 
 function httpRequest(options) {
     const callerName = arguments.callee.caller.name;
-    const event = {
-        event_type: "HTTP",
-        function_name: callerName,
-        event_request: JSON.stringify({options}),
-        event_result: null,
-        event_error: null
-    };
+    const event = new Event("HTTP");
+    event.function_name = callerName;
+    event.event_request = JSON.stringify({options});
 
     return new Promise(async (resolve, reject) => {
         await http.request(options, (resp) => {
@@ -39,7 +36,7 @@ function httpRequest(options) {
         }).on('error', (error) => {
             event.event_error = JSON.stringify(error);
             reject(error)
-        }).on('close',  async ()=>{
+        }).on('close', async () => {
             if (acceptedCallers.includes(callerName))
                 await eventService.insertEvent(event);
         }).end();

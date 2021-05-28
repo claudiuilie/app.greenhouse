@@ -12,13 +12,13 @@
         <div class="row row-cols-1 ">
             <div class="col   mt-1">
                 <div class="text-center">
-                    <i class="fad fa-water text-info "></i><small> {{tank.current_capacity}}L</small>
+                    <i class="fad fa-water text-info "></i><small class="text-muted"> {{tank.current_capacity}}L</small>
                 </div>
                 <div class="progress w-100">
                     <div class="progress-bar progress-bar-striped progress-bar-animated {{#ifBetween
                             status.water_level 160 tank.height}}bg-danger{{/ifBetween}} {{#ifBetween
                             status.water_level 130 160}}bg-warning{{/ifBetween}} {{#ifBetween
-                            status.water_level 30 130}}bg-warning{{/ifBetween}}"
+                            status.water_level 30 130}}bg-success{{/ifBetween}}"
                          role="progressbar"
                          style="width: {{#percent tank.current_capacity tank.max_capacity}}{{/percent}}%"
                          aria-valuenow="{{status.current_capacity}}" aria-valuemin="0"
@@ -29,16 +29,7 @@
                 <div class="row row-cols-1 p-1 rounded card-body justify-content-start collapse multi-collapse" id="pompEvents">
                     <div class="dropdown-divider"></div>
                     {{#each events}}
-                        {{#ifEquals this.function_name 'pomp'}}
-                            <div class="col p-0 text-center">
-                                <small>
-                                    <small class="font-weight-bold {{#ifEquals this.event_value '0'}}text-success {{else}}text-danger {{/ifEquals}}"><i class="fad fa-calendar-day">
-                                    </i>{{this.event_date}} - {{#ifEquals this.event_value '1'}}[stop]{{else}}[start]{{/ifEquals}}
-                                    </small>
-                                </small>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                        {{else ifEquals this.function_name 'setPomp'}}
+                        {{#ifEquals this.function_name 'setPomp'}}
                             <div class="col p-0 text-center">
                                 <small>
                                     <small class="text-success font-weight-bold"><i
@@ -47,6 +38,7 @@
                                     </small>
                                 </small>
                             </div>
+                            <div class="dropdown-divider"></div>
                         {{/ifEquals}}
                     {{/each}}
                 </div>

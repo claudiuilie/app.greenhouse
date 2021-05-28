@@ -13,6 +13,7 @@ const adminRouter = require('./routes/admin');
 const growthRouter = require('./routes/growth')
 const loginRouter = require('./routes/login');
 const logoutRouter = require('./routes/logout');
+const reportingRouter = require('./routes/reporting');
 const cronManager = require('./cron/cronJobManager');
 const app = express();
 
@@ -44,24 +45,25 @@ app.use((req, res, next) => {
 });
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
-app.use((req, res, next) => {
-  // Get auth token from the cookies
-  if(!req.user){
-    res.render('login', {
-      message: {
-        type: 'alert',
-        text: 'Please login to continue'
-      }
-    });
-    return;
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   // Get auth token from the cookies
+//   if(!req.user){
+//     res.render('login', {
+//       layout: 'empty',
+//       message: {
+//         type: 'alert',
+//         text: 'Please login to continue'
+//       }
+//     });
+//     return;
+//   }
+//   next();
+// });
 
 app.use('/', indexRouter);
 app.use('/admin',adminRouter);
 app.use('/growth', growthRouter);
-
+app.use('/reporting', reportingRouter);
 cronManager.createJobs();
 
 // catch 404 and forward to error handler

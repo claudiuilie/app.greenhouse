@@ -96,10 +96,9 @@ async function getEvents() {
     if(events != null && waterTankSettings != null){
         for (let k in events)
             if(events[k].function_name === 'setPomp')
-                events[k].event_value = events[k].event_value.split(":")[0]*2*waterTankSettings.ml_s;
+                events[k].event_value = parseInt(events[k].event_value.split(":")[0]*2*waterTankSettings.ml_s);
 
     }
-
     return events;
 }
 

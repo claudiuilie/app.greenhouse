@@ -1,18 +1,15 @@
 const mysql = require('mysql2/promise');
 const config = require('../../config/config');
 const eventService = require('../eventService');
+const Event = require('../../models/Event');
 const acceptedCallers = ['insertHistory'];
 
 function query(sql, params) {
 
-    const callerName = arguments.callee.caller.name;
-    const event = {
-        event_type: "DB",
-        function_name: callerName,
-        event_request: {sql: sql, params: params},
-        event_result: null,
-        event_error: null
-    }
+    const callerName = arguments.callee.caller.name
+    const event = new Event("BD");
+    event.function_name = callerName;
+    event.event_request = {sql: sql, params: params};
 
     return new Promise(async (resolve, reject) => {
         try {
@@ -31,10 +28,10 @@ function query(sql, params) {
     });
 }
 
-async function logEvent(event) {
-    if (typeof event !== undefined) {
+async function logEvent(e) {
+    if (typeof e !== undefined) {
         try {
-            await eventService.insertEvent(event);
+            await eventService.insertEvent(e);
         } catch (err) {
             console.log(err);
         }

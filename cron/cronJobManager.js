@@ -5,6 +5,7 @@ const fanService = require('../services/database/fanSettingsService')
 const greenhouseController = require('../controllers/greenhouseController');
 const soilMoistureHelper = require('../helpers/soilMoistureHelper');
 const eventService = require('../services/database/eventsDbService');
+const mailerHelper = require('../helpers/mailerHelper');
 const DateAndTime = require('../helpers/dateAndTimeHelper');
 let greenhouseJobManager;
 
@@ -30,6 +31,17 @@ function createJobs() {
         start: !!parseInt(process.env.GREENHOUSE_MONITOR_JOB_AUTOSTART),
         onComplete: () => {
             console.log("GREENHOUSE_MONITOR_JOB stopped")
+        }
+    });
+
+    greenhouseJobManager.add("mailer", process.env.GREENHOUSE_MONITOR_JOB_INTERVAL, () => {
+        mailerHelper.sendLastDayReport().catch((err)=>{
+            console.log(err)
+        });
+    }, {
+        start: false,
+        onComplete: () => {
+            console.log("MAILER stopped")
         }
     });
 
@@ -76,7 +88,7 @@ async function monitorJob() {
         const humInRange = isInRange(greenHouseStats.humidity, schedule.min_humidity, schedule.max_humidity);
         const moistInRange1 = isInRange(greenHouseStats.soil_moisture_1, schedule.wet, schedule.dry);
         const moistInRange2 = isInRange(greenHouseStats.soil_moisture_2, schedule.wet, schedule.dry);
-        //todo hum control
+
         await tempControl(tempInRange, schedule, greenHouseStats)
         await lightsControl(schedule, greenHouseStats);
         await pompControl(moistInRange1,moistInRange2,greenHouseStats.soil_moisture_1, greenHouseStats.soil_moisture_2, schedule);
@@ -88,7 +100,6 @@ async function pompControl(moistInRange1,moistInRange2,sensor1, sensor2, schedul
 
     const minMoist = schedule.min_moist;
     const ml = schedule.water_ml;
-    console.log(minMoist, ml)
     if(moistInRange1 && moistInRange2){
         const pompOff = await eventService.getPompEvents();
         const s1Percent =  soilMoistureHelper.moisturePercent(sensor1, schedule.dry, schedule.wet);

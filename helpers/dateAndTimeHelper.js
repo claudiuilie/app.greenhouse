@@ -24,7 +24,11 @@ class DateAndTime {
     }
 
     getCurrentDate() {
-        return `${this.getYear()}-${this.getMonth()}-${this.getDay()}`
+        return `${this.getDay()}/${this.getMonth()}/${this.getYear()}`
+    }
+
+    getYesterday() {
+        return `${this.getDay()-1}/${this.getMonth()}/${this.getYear()}`
     }
 
     getLocalDateString() {
