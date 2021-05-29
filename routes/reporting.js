@@ -1,23 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const mailHelper = require('../helpers/mailerHelper')
+const Alert = require('../models/Alert');
 
 router.get('/lastDay', async (req, res, next) => {
 
+    const alert = new Alert();
     await mailHelper.sendLastDayReport()
         .then((data)=>{
-            req.session.alert = {
-                type : "success",
-                message: `[${data.response}] - Report sent to ${JSON.stringify(data.accepted)}`
-            }
-            console.log(req.session.alert)
+            alert.type =  "success";
+            alert.text = `[${data.response}] - Report sent to ${JSON.stringify(data.accepted)}`;
+            req.session.alert = alert.toObject()
             res.redirect('/admin');
         })
         .catch((err)=>{
-            req.session.alert = {
-                type : "danger",
-                message: `There was an error at email sending.`
-            }
+            alert.type = "danger";
+            alert.text = `There was an error at email sending.`;
+            req.session.alert = alert.toObject()
             res.redirect('/admin');
         })
 
@@ -35,7 +34,7 @@ router.get('/today', async (req, res, next) => {
                 type : "success",
                 message: `[${data.response}] - Report sent to ${JSON.stringify(data.accepted)}`
             }
-            console.log(req.session.alert)
+
             res.redirect('/admin');
         })
         .catch((err)=>{

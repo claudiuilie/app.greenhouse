@@ -58,13 +58,13 @@ class ChartDataSet {
         this.#_data.push(obj);
     }
 
-    buildObject(){
+    toObject(){
         return{
-            label: this.#_label,
-            borderColor: this.#_borderColor,
-            backGroundColor: this.#_backgroundColor,
-            fill: this.#_fill,
-            data: this.#_data
+            label: this.label,
+            borderColor: this.borderColor,
+            backGroundColor: this.backgroundColor,
+            fill: this.fill,
+            data: this.data
         }
     }
 }

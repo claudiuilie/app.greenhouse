@@ -20,12 +20,12 @@ function sendMail(mailOptions){
          .then(async (data)=>{
              console.log('data', data)
              event.event_result = JSON.stringify(data);
-             await eventService.insertEvent(event)
+             await eventService.insertEvent(event.toObject())
          })
          .catch(async (err)=>{
              console.log('err', err)
              event.event_error = JSON.stringify(err);
-             await eventService.insertEvent(event)
+             await eventService.insertEvent(event.toObject())
          })
 }
 

@@ -24,7 +24,7 @@ function query(sql, params) {
         }
 
         if (acceptedCallers.includes(callerName))
-            await logEvent(event);
+            await logEvent(event.toObject());
     });
 }
 

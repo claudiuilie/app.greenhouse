@@ -50,6 +50,15 @@ class Event {
         return this.#_event_type;
     }
 
+    toObject(){
+        return new Object({
+        event_type: this.event_type,
+        function_name: this.function_name,
+        event_request: this.event_request,
+        event_result: this.event_result,
+        event_error: this.event_error
+        });
+    }
 }
 
 module.exports = Event;

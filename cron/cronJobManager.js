@@ -2,7 +2,7 @@ const CronJobManager = require('cron-job-manager');
 const scheduleService = require('../services/database/scheduleService')
 const historyService = require('../services/database/greenhouseHistoryService')
 const fanService = require('../services/database/fanSettingsService')
-const greenhouseController = require('../controllers/greenhouseController');
+const greenhouseController = require('../controllers/GreenhouseController');
 const soilMoistureHelper = require('../helpers/soilMoistureHelper');
 const eventService = require('../services/database/eventsDbService');
 const mailerHelper = require('../helpers/mailerHelper');
@@ -39,7 +39,7 @@ function createJobs() {
             console.log(err)
         });
     }, {
-        start: process.env.MAILER_DAILY_REPORT_JOB_AUTOSTART,
+        start: !!parseInt(process.env.MAILER_DAILY_REPORT_JOB_AUTOSTART),
         onComplete: () => {
             console.log("MAILER stopped")
         }

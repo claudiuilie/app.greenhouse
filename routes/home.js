@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const homeController = require('../controllers/homeController');
+const HomeController = require('../controllers/HomeController');
 const pompController = require('../controllers/pompController');
 const fanController = require('../controllers/fanController');
 const lightsController = require('../controllers/lightsController');
@@ -10,17 +10,17 @@ const historyService = require('../services/database/greenhouseHistoryService')
 router.get('/', async (req, res, next) => {
 
     const greenhouseHistory = await historyService.getLasDayHistory();
-    const greenhouseStatus = await homeController.getGreenhouseStatus();
+    const greenhouseStatus = await HomeController.getGreenhouseStatus();
 
     res.render('home', {
         history: greenhouseHistory,
         status: greenhouseStatus,
-        tank: await homeController.getWaterTankLevel(greenhouseStatus),
-        events: await homeController.getEvents(),
-        tempHistory: await homeController.getGreenhouseTempHistory(greenhouseHistory),
-        humHistory: await homeController.getGreenhouseHumHistory(greenhouseHistory),
-        soilHistory_1: await homeController.getGreenhouseSoilHistory1(greenhouseHistory),
-        soilHistory_2: await homeController.getGreenhouseSoilHistory2(greenhouseHistory),
+        tank: await HomeController.getWaterTankLevel(greenhouseStatus),
+        events: await HomeController.getEvents(),
+        tempHistory: await HomeController.getGreenhouseTempHistory(greenhouseHistory),
+        humHistory: await HomeController.getGreenhouseHumHistory(greenhouseHistory),
+        soilHistory_1: await HomeController.getGreenhouseSoilHistory1(greenhouseHistory),
+        soilHistory_2: await HomeController.getGreenhouseSoilHistory2(greenhouseHistory),
         home: true,
         info: req.session.alert
     });

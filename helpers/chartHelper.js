@@ -11,7 +11,7 @@ async function lastDayTempHistoryChartSet(){
     for(let k in history)
         dataSet.addToData(history[k].temperature);
 
-    return dataSet.buildObject();
+    return dataSet.toObject();
 }
 
 async function todayTempHistoryChartSet(){
@@ -24,7 +24,7 @@ async function todayTempHistoryChartSet(){
     for(let k in history)
         dataSet.addToData(history[k].temperature);
 
-    return dataSet.buildObject();
+    return dataSet.toObject();
 }
 
 async function lastDayHumHistoryChartSet(){
@@ -37,7 +37,7 @@ async function lastDayHumHistoryChartSet(){
     for(let k in history)
         dataSet.addToData(history[k].humidity);
 
-    return dataSet.buildObject();
+    return dataSet.toObject();
 }
 async function todayHumHistoryChartSet(){
     const history = await greenhouseHistoryService.getTodayHistory();
@@ -49,7 +49,7 @@ async function todayHumHistoryChartSet(){
     for(let k in history)
         dataSet.addToData(history[k].humidity);
 
-    return dataSet.buildObject();
+    return dataSet.toObject();
 }
 
 async function lastDayHistoryLabels() {

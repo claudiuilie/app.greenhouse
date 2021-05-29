@@ -1,29 +1,26 @@
-const greenhouseController = require('../controllers/greenhouseController');
+const greenhouseController = require('./GreenhouseController');
+const Alert = require('../models/Alert');
 
 async function setFan(fanName, fanStatus) {
-    let alert;
+
+    const alert = new Alert();
     switch (fanName) {
         case "fanIn" :
             await greenhouseController.setFanIn(fanStatus ? 102 : 0);
-            alert = {
-                type: 'info',
-                text: `Fan in ${fanStatus ? 'started' : 'stopped'}.`
-            }
+            alert.type = 'info'
+            alert.text = `Fan in ${fanStatus ? 'started' : 'stopped'}.`;
             break;
         case "fanOut" :
             await greenhouseController.setFanOut(fanStatus ? 102 : 0);
-            alert = {
-                type: 'info',
-                text: `Fan out ${fanStatus ? 'started' : 'stopped'}.`
-            }
+            alert.type = 'info';
+            alert.text = `Fan out ${fanStatus ? 'started' : 'stopped'}.`;
             break;
         default:
-            alert = {
-                type: 'danger',
-                text: `Invalid fan name ${fanName}`
-            }
+            alert.type = 'danger';
+            alert.text = `Invalid fan name ${fanName}`;
+
     }
-    return alert;
+    return alert.toObject();
 }
 
 module.exports = {

@@ -44,6 +44,15 @@ class MailOptions {
         this.#_html = value;
     }
 
+    toObject() {
+        return new Object({
+        from: this.from,
+        to : this.to,
+        subject :this.subject,
+        html: this.html
+        })
+    }
+
 }
 
 module.exports = MailOptions;

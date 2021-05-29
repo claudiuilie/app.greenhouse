@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const adminController = require('../controllers/adminController');
-const jobsController = require('../controllers/jobsController');
+const AdminController = require('../controllers/AdminController');
+const JobsController = require('../controllers/JobsController');
 
 /* GET admin page. */
 router.get('/', async (req, res, next) => {
     res.render('admin',
         {
-            logs: await adminController.getLogs(),
-            jobs: await jobsController.getJobs(),
+            logs: await AdminController.getLogs(),
+            jobs: await JobsController.getJobs(),
             admin: true,
             info: req.session.alert
         });
@@ -18,7 +18,7 @@ router.get('/', async (req, res, next) => {
 router.post('/jobs', async (req, res, next) => {
     const jobName = req.body.jobName;
     const jobState = parseInt(req.body.jobState);
-    req.session.alert = await jobsController.setJobState(jobName,jobState);
+    req.session.alert = await JobsController.setJobState(jobName,jobState);
     res.redirect('/admin');
 });
 

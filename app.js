@@ -45,20 +45,20 @@ app.use((req, res, next) => {
 });
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
-// app.use((req, res, next) => {
-//   // Get auth token from the cookies
-//   if(!req.user){
-//     res.render('login', {
-//       layout: 'empty',
-//       message: {
-//         type: 'alert',
-//         text: 'Please login to continue'
-//       }
-//     });
-//     return;
-//   }
-//   next();
-// });
+app.use((req, res, next) => {
+  // Get auth token from the cookies
+  if(!req.user){
+    res.render('login', {
+      layout: 'empty',
+      message: {
+        type: 'alert',
+        text: 'Please login to continue'
+      }
+    });
+    return;
+  }
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/admin',adminRouter);
