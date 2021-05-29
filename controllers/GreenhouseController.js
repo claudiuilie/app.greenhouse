@@ -5,7 +5,7 @@ let success;
 
 class GreenhouseController {
     static async setFanIn(value) {
-        HttpRequestService.HttpRequestService.http.prototype = this.setFanIn.name
+        HttpRequestService.http.prototype = this.setFanIn.name
         await HttpRequestService.http(`http://${options.host}${options.fanInEndpoint}?p=${value}`)
             .then((data) => {
                 if (typeof data.return_value !== "undefined")
