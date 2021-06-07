@@ -10,23 +10,28 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-function sendMail(mailOptions){
-
+async function sendMail(mailOptions){
     const event = new Event("MAIL");
-    event.function_name = arguments.callee.caller.name;
+    event.function_name = sendMail.prototype;
     event.event_request = JSON.stringify(mailOptions);
+    const response  = {
+        data: null,
+        error: null
+    }
 
-     transporter.sendMail(mailOptions)
+    await transporter.sendMail(mailOptions)
          .then(async (data)=>{
-             console.log('data', data)
+             response.data = data;
              event.event_result = JSON.stringify(data);
              await eventService.insertEvent(event.toObject())
          })
          .catch(async (err)=>{
-             console.log('err', err)
+             response.error = err;
              event.event_error = JSON.stringify(err);
              await eventService.insertEvent(event.toObject())
-         })
+         });
+
+    return response;
 }
 
 module.exports = {

@@ -40,6 +40,24 @@ async function dailyHumHistoryChart() {
     return chart;
 }
 
+async function dailySoil1Chart() {
+    const chart = new ChartJsImage();
+    const labels = await chartHelper.lastDayHistoryLabels();
+    const dataSet = await chartHelper.lastDaySoil1ChartSet();
+    mailerChartConfig.data = {labels: labels, datasets: [dataSet]}
+    chart.setConfig(mailerChartConfig);
+    return chart;
+}
+
+async function dailySoil2Chart() {
+    const chart = new ChartJsImage();
+    const labels = await chartHelper.lastDayHistoryLabels();
+    const dataSet = await chartHelper.lastDaySoil2ChartSet();
+    mailerChartConfig.data = {labels: labels, datasets: [dataSet]}
+    chart.setConfig(mailerChartConfig);
+    return chart;
+}
+
 async function todayTempHistoryChart() {
     const chart = new ChartJsImage();
     const labels = await chartHelper.todayHistoryLabels();
@@ -58,11 +76,31 @@ async function todayHumHistoryChart() {
     return chart;
 }
 
+async function todaySoil1Chart() {
+    const chart = new ChartJsImage();
+    const labels = await chartHelper.todayHistoryLabels();
+    const dataSet = await chartHelper.todaySoil1ChartSet();
+    mailerChartConfig.data = {labels: labels, datasets: [dataSet]}
+    chart.setConfig(mailerChartConfig);
+    return chart;
+}
+
+async function todaySoil2Chart() {
+    const chart = new ChartJsImage();
+    const labels = await chartHelper.todayHistoryLabels();
+    const dataSet = await chartHelper.todaySoil2ChartSet();
+    mailerChartConfig.data = {labels: labels, datasets: [dataSet]}
+    chart.setConfig(mailerChartConfig);
+    return chart;
+}
+
 module.exports = {
     dailyTempHistoryChart,
     dailyHumHistoryChart,
     todayTempHistoryChart,
-    todayHumHistoryChart
+    todayHumHistoryChart,
+    dailySoil1Chart,
+    dailySoil2Chart,
+    todaySoil2Chart,
+    todaySoil1Chart
 }
-
-

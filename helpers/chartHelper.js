@@ -1,5 +1,7 @@
 const greenhouseHistoryService = require('../services/database/greenhouseHistoryService');
 const ChartDataSet = require('../models/ChartDataSet');
+const soilMoistureHelper = require('../helpers/soilMoistureHelper');
+const soilService = require('../services/database/soilSettingsService');
 
 async function lastDayTempHistoryChartSet(){
     const history = await greenhouseHistoryService.getDailyHistory();
@@ -39,6 +41,39 @@ async function lastDayHumHistoryChartSet(){
 
     return dataSet.toObject();
 }
+
+async function lastDaySoil1ChartSet(){
+    const history = await greenhouseHistoryService.getDailyHistory();
+    const soilMoistureSettings = await soilService.getSoilSettings();
+    const dry = soilMoistureSettings.dry;
+    const wet = soilMoistureSettings.wet;
+    const dataSet = new ChartDataSet();
+    dataSet.label = "Soil Moisture 1";
+    dataSet.borderColor = "brown";
+    dataSet.backgroundColor = "brown";
+
+    for(let k in history)
+        dataSet.addToData(soilMoistureHelper.moisturePercent(history[k].soil_moisture_1,dry,wet));
+
+    return dataSet.toObject();
+}
+
+async function lastDaySoil2ChartSet(){
+    const history = await greenhouseHistoryService.getDailyHistory();
+    const soilMoistureSettings = await soilService.getSoilSettings();
+    const dry = soilMoistureSettings.dry;
+    const wet = soilMoistureSettings.wet;
+    const dataSet = new ChartDataSet();
+    dataSet.label = "Soil Moisture 2";
+    dataSet.borderColor = "brown";
+    dataSet.backgroundColor = "brown";
+
+    for(let k in history)
+        dataSet.addToData(soilMoistureHelper.moisturePercent(history[k].soil_moisture_2,dry,wet));
+
+    return dataSet.toObject();
+}
+
 async function todayHumHistoryChartSet(){
     const history = await greenhouseHistoryService.getTodayHistory();
     const dataSet = new ChartDataSet();
@@ -51,6 +86,39 @@ async function todayHumHistoryChartSet(){
 
     return dataSet.toObject();
 }
+
+async function todaySoil1ChartSet(){
+    const history = await greenhouseHistoryService.getTodayHistory();
+    const soilMoistureSettings = await soilService.getSoilSettings();
+    const dry = soilMoistureSettings.dry;
+    const wet = soilMoistureSettings.wet;
+    const dataSet = new ChartDataSet();
+    dataSet.label = "Soil Moisture 1";
+    dataSet.borderColor = "brown";
+    dataSet.backgroundColor = "brown";
+
+    for(let k in history)
+        dataSet.addToData(soilMoistureHelper.moisturePercent(history[k].soil_moisture_1,dry,wet));
+
+    return dataSet.toObject();
+}
+
+async function todaySoil2ChartSet(){
+    const history = await greenhouseHistoryService.getTodayHistory();
+    const dataSet = new ChartDataSet();
+    const soilMoistureSettings = await soilService.getSoilSettings();
+    const dry = soilMoistureSettings.dry;
+    const wet = soilMoistureSettings.wet;
+    dataSet.label = "Soil Moisture 2";
+    dataSet.borderColor = "brown";
+    dataSet.backgroundColor = "brown";
+
+    for(let k in history)
+        dataSet.addToData(soilMoistureHelper.moisturePercent(history[k].soil_moisture_2,dry,wet));
+
+    return dataSet.toObject();
+}
+
 
 async function lastDayHistoryLabels() {
     const labels = [];
@@ -76,5 +144,9 @@ module.exports = {
     lastDayTempHistoryChartSet,
     todayHistoryLabels,
     todayTempHistoryChartSet,
-    todayHumHistoryChartSet
+    todayHumHistoryChartSet,
+    lastDaySoil1ChartSet,
+    lastDaySoil2ChartSet,
+    todaySoil1ChartSet,
+    todaySoil2ChartSet
 }

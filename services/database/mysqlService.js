@@ -7,7 +7,7 @@ const acceptedCallers = ['insertHistory'];
 function query(sql, params) {
 
     const callerName = arguments.callee.caller.name
-    const event = new Event("BD");
+    const event = new Event("DB");
     event.function_name = callerName;
     event.event_request = {sql: sql, params: params};
 
